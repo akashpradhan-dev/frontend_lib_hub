@@ -28,10 +28,10 @@ const libraryDetails = async ({
   }
   return (
     <div>
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="pt-6 md:pt-10 pb-20 px-4 sm:px-6 lg:px-8 ">
         <Link
           href="/lib"
-          className={`flex items-center gap-2 mb-6 cursor-pointer  md:hidden`}
+          className={`flex items-center gap-2 mb-6 cursor-pointer max-w-7xl mx-auto md:w-2/3`}
         >
           <ChevronLeft className="w-4 h-4" />
           Back to Libraries

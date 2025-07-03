@@ -5,7 +5,7 @@ import { _libraries } from '../../../data/libraries'
 const libraries = () => {
   return (
     <div>
-      <section className="relative pt-32 px-4 sm:px-6 lg:px-8">
+      <section className="relative pt-20 md:pt-32 px-4 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
             Libraries for Modern Development
