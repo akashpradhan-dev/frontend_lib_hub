@@ -1,237 +1,534 @@
 export const _libraries = [
   {
     id: 1,
-    name: 'React',
+    name: 'react',
     description: 'A JavaScript library for building user interfaces',
-    logo: '⚛️',
-    tags: ['UI', 'Framework'],
-    stars: 220000,
+    logo: 'https://reactjs.org/favicon.ico',
+    tags: ['ui', 'library', 'frontend', 'jsx'],
+    stars: 210000,
     github: 'https://github.com/facebook/react',
     overview:
-      'React is a declarative, efficient, and flexible JavaScript library for building user interfaces. It lets you compose complex UIs from small and isolated pieces of code called "components".',
+      'React is a declarative, efficient, and flexible JavaScript library for building user interfaces.',
     features: [
+      'Declarative views',
+      'Component-based',
       'Virtual DOM',
-      'Component-Based',
-      'Declarative',
-      'Learn Once, Write Anywhere',
+      'Hooks for state management',
     ],
     installation: 'npm install react react-dom',
     usage: `import React from 'react';
-
-function App() {
-  return (
-    <div>
-      <h1>Hello, React!</h1>
-      <p>Building amazing UIs with components!</p>
-    </div>
-  );
-}
-
-// Component with state
-function Counter() {
-  const [count, setCount] = React.useState(0);
-  
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  );
-}`,
+import ReactDOM from 'react-dom';`,
     resources: [
-      { name: 'Official Docs', url: 'https://react.dev' },
-      { name: 'Tutorial', url: 'https://react.dev/learn' },
+      {
+        name: 'Official Docs',
+        url: 'https://reactjs.org/docs/getting-started.html',
+      },
+      { name: 'GitHub', url: 'https://github.com/facebook/react' },
     ],
   },
   {
     id: 2,
-    name: 'Tailwind CSS',
-    description: 'A utility-first CSS framework for rapid UI development',
-    logo: '🎨',
-    tags: ['CSS', 'UI', 'Utility'],
-    stars: 78000,
-    github: 'https://github.com/tailwindlabs/tailwindcss',
+    name: 'react-router',
+    description: 'Declarative routing for React',
+    logo: 'https://reactrouter.com/favicon.ico',
+    tags: ['routing', 'navigation', 'spa'],
+    stars: 48000,
+    github: 'https://github.com/remix-run/react-router',
     overview:
-      'Tailwind CSS is a utility-first CSS framework packed with classes that can be composed to build any design, directly in your markup.',
+      'React Router is a collection of navigational components that compose declaratively with your application.',
     features: [
-      'Utility-First',
-      'Responsive Design',
-      'Hover, Focus, & Other States',
-      'Dark Mode',
+      'Nested routes',
+      'Route matching',
+      'Code splitting support',
+      'Dynamic routing',
     ],
-    installation: 'npm install -D tailwindcss\nnpx tailwindcss init',
-    usage: `<!-- Add to your HTML -->
-<div class="bg-blue-500 text-white p-4 rounded-lg shadow-md">
-  <h1 class="text-2xl font-bold">Hello Tailwind!</h1>
-  <p class="mt-2">This card uses Tailwind utility classes.</p>
-</div>`,
+    installation: 'npm install react-router-dom',
+    usage: `import { BrowserRouter, Routes, Route } from 'react-router-dom';`,
     resources: [
-      { name: 'Official Docs', url: 'https://tailwindcss.com' },
-      { name: 'Play CDN', url: 'https://play.tailwindcss.com' },
+      { name: 'Official Docs', url: 'https://reactrouter.com/' },
+      { name: 'GitHub', url: 'https://github.com/remix-run/react-router' },
     ],
   },
   {
     id: 3,
-    name: 'Lodash',
-    description: 'A modern JavaScript utility library delivering modularity',
-    logo: '🔧',
-    tags: ['Utility', 'JavaScript'],
+    name: 'redux',
+    description: 'Predictable state container for JavaScript apps',
+    logo: 'https://redux.js.org/img/redux-logo-landscape.png',
+    tags: ['state-management', 'flux', 'predictable-state'],
     stars: 58000,
-    github: 'https://github.com/lodash/lodash',
+    github: 'https://github.com/reduxjs/redux',
     overview:
-      'Lodash makes JavaScript easier by taking the hassle out of working with arrays, numbers, objects, strings, etc.',
-    features: ['Modular', 'Performant', 'Extensive API', 'FP Support'],
-    installation: 'npm install lodash',
-    usage: `import _ from 'lodash';
-
-// Array manipulation
-const users = [
-  { name: 'John', age: 30 },
-  { name: 'Jane', age: 25 }
-];
-
-const names = _.map(users, 'name');
-console.log(names); // ['John', 'Jane']
-
-// Debounce function
-const debouncedSearch = _.debounce(searchFunction, 300);`,
-    resources: [
-      { name: 'Official Docs', url: 'https://lodash.com' },
-      {
-        name: 'FP Guide',
-        url: 'https://github.com/lodash/lodash/wiki/FP-Guide',
-      },
-    ],
-  },
-  {
-    id: 4,
-    name: 'Axios',
-    description: 'Promise based HTTP client for the browser and node.js',
-    logo: '🌐',
-    tags: ['HTTP', 'Utility'],
-    stars: 104000,
-    github: 'https://github.com/axios/axios',
-    overview:
-      'Axios is a simple promise based HTTP client for the browser and node.js. It provides a simple to use library in a small package.',
+      'Redux helps you write applications that behave consistently and run in different environments.',
     features: [
-      'Request/Response Interceptors',
-      'Request/Response Transformation',
-      'Cancel Requests',
-      'JSON Data Handling',
+      'Single source of truth',
+      'State is read-only',
+      'Changes via pure functions',
+      'DevTools integration',
     ],
-    installation: 'npm install axios',
-    usage: `// Fetch API with modern async/await
-const fetchUsers = async () => {
-  try {
-    const response = await fetch('/api/users');
-    const data = await response.json();
-    console.log(data);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
-
-// POST request
-const createUser = async (userData) => {
-  const response = await fetch('/api/users', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(userData)
-  });
-  return response.json();
-};`,
+    installation: 'npm install redux',
+    usage: `import { createStore } from 'redux';`,
     resources: [
-      { name: 'Official Docs', url: 'https://axios-http.com' },
-      { name: 'GitHub', url: 'https://github.com/axios/axios' },
+      { name: 'Official Docs', url: 'https://redux.js.org/' },
+      { name: 'GitHub', url: 'https://github.com/reduxjs/redux' },
     ],
   },
   {
     id: 5,
-    name: 'Framer Motion',
-    description: 'A production-ready motion library for React',
-    logo: '🎭',
-    tags: ['Animation', 'UI', 'React'],
-    stars: 22000,
-    github: 'https://github.com/framer/motion',
+    name: 'formik',
+    description: 'Build forms in React, without the tears',
+    logo: 'https://formik.org/favicon.ico',
+    tags: ['forms', 'validation', 'react'],
+    stars: 32000,
+    github: 'https://github.com/formium/formik',
     overview:
-      'Framer Motion is a production-ready motion library for React. It brings declarative animations, effortless layout transitions and gestures to your React components.',
-    features: ['Declarative API', 'Layout Animations', 'Gestures', 'Variants'],
-    installation: 'npm install framer-motion',
-    usage: `import { motion } from 'framer-motion';
-
-function AnimatedBox() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ scale: 1.05 }}
-      className="bg-blue-500 p-4 rounded-lg"
-    >
-      Hover me!
-    </motion.div>
-  );
-}`,
+      'Formik is a small library that helps you with the 3 most annoying parts in React forms: Getting values in and out of form state, validation and error messages, and handling form submission.',
+    features: [
+      'Easy form state management',
+      'Built-in validation support',
+      'Field-level and form-level validation',
+      'Integration with Yup for schema validation',
+    ],
+    installation: 'npm install formik',
+    usage: `import { Formik, Form, Field } from 'formik';`,
     resources: [
-      { name: 'Official Docs', url: 'https://www.framer.com/motion' },
-      { name: 'Examples', url: 'https://www.framer.com/motion/examples' },
+      { name: 'Official Docs', url: 'https://formik.org/docs/overview' },
+      { name: 'GitHub', url: 'https://github.com/formium/formik' },
     ],
   },
   {
     id: 6,
-    name: 'Redux Toolkit',
+    name: 'tanstack-query',
     description:
-      'The official, opinionated, batteries-included toolset for Redux',
-    logo: '🔄',
-    tags: ['State', 'Redux'],
-    stars: 10000,
-    github: 'https://github.com/reduxjs/redux-toolkit',
+      'Hooks for fetching, caching and updating asynchronous data in React',
+    logo: 'https://react-query.tanstack.com/favicon.ico',
+    tags: ['data-fetching', 'caching', 'server-state'],
+    stars: 39000,
+    github: 'https://github.com/TanStack/query',
     overview:
-      'Redux Toolkit is the official, opinionated, batteries-included toolset for efficient Redux development.',
+      'React Query provides hooks for fetching, caching and updating asynchronous data in React without the hassle of global state.',
     features: [
-      'Simple Store Setup',
-      'Immutable Updates',
-      'Built-in DevTools',
-      'RTK Query',
+      'Automatic caching & refetching',
+      'Background updates',
+      'Pagination & infinite queries',
+      'DevTools integration',
     ],
-    installation: 'npm install @reduxjs/toolkit react-redux',
-    usage: `// Simple state management pattern
-const createStore = (reducer, initialState) => {
-  let state = initialState;
-  let listeners = [];
-  
-  const getState = () => state;
-  
-  const dispatch = (action) => {
-    state = reducer(state, action);
-    listeners.forEach(listener => listener());
-  };
-  
-  const subscribe = (listener) => {
-    listeners.push(listener);
-    return () => {
-      listeners = listeners.filter(l => l !== listener);
-    };
-  };
-  
-  return { getState, dispatch, subscribe };
-};
-
-// Counter reducer
-const counterReducer = (state = { count: 0 }, action) => {
-  switch (action.type) {
-    case 'INCREMENT':
-      return { count: state.count + 1 };
-    case 'DECREMENT':
-      return { count: state.count - 1 };
-    default:
-      return state;
-  }
-};`,
+    installation: 'npm install @tanstack/react-query',
+    usage: `import { useQuery } from '@tanstack/react-query';`,
     resources: [
-      { name: 'Official Docs', url: 'https://redux-toolkit.js.org' },
-      { name: 'Redux Docs', url: 'https://redux.js.org' },
+      { name: 'Official Docs', url: 'https://react-query.tanstack.com/' },
+      { name: 'GitHub', url: 'https://github.com/TanStack/query' },
+    ],
+  },
+  {
+    id: 7,
+    name: 'material-ui',
+    description: 'React components for faster and easier web development',
+    logo: 'https://mui.com/static/logo.png',
+    tags: ['ui', 'material-design', 'components'],
+    stars: 88000,
+    github: 'https://github.com/mui/material-ui',
+    overview:
+      'MUI provides a robust, customizable, and accessible library of foundational and advanced components.',
+    features: [
+      'Material Design components',
+      'Theme customization',
+      'Accessible',
+      'SSR support',
+    ],
+    installation: 'npm install @mui/material @emotion/react @emotion/styled',
+    usage: `import Button from '@mui/material/Button';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://mui.com/' },
+      { name: 'GitHub', url: 'https://github.com/mui/material-ui' },
+    ],
+  },
+  {
+    id: 8,
+    name: 'styled-components',
+    description: 'Visual primitives for the component age',
+    logo: 'https://styled-components.com/favicon.ico',
+    tags: ['css-in-js', 'styled', 'theming'],
+    stars: 42000,
+    github: 'https://github.com/styled-components/styled-components',
+    overview:
+      'Utilize tagged template literals to style your components, keeping concerns well separated and making components more readable.',
+    features: [
+      'Scoped styles',
+      'Theming support',
+      'Dynamic styling',
+      'Automatic critical CSS',
+    ],
+    installation: 'npm install styled-components',
+    usage: `import styled from 'styled-components';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://styled-components.com/docs' },
+      {
+        name: 'GitHub',
+        url: 'https://github.com/styled-components/styled-components',
+      },
+    ],
+  },
+  {
+    id: 9,
+    name: 'axios',
+    description: 'Promise based HTTP client for the browser and node.js',
+    logo: 'https://axios-http.com/assets/logo.svg',
+    tags: ['http', 'request', 'ajax'],
+    stars: 120000,
+    github: 'https://github.com/axios/axios',
+    overview:
+      'Axios is a promise-based HTTP client for the browser and node.js, great for REST API calls in React apps.',
+    features: [
+      'Supports Promise API',
+      'Client-side support for XSRF',
+      'Intercept request and response',
+      'Automatic JSON data transformation',
+    ],
+    installation: 'npm install axios',
+    usage: `import axios from 'axios';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://axios-http.com/docs/intro' },
+      { name: 'GitHub', url: 'https://github.com/axios/axios' },
+    ],
+  },
+  {
+    id: 10,
+    name: 'react-hook-form',
+    description:
+      'Performant, flexible and extensible forms with easy-to-use validation',
+    logo: 'https://react-hook-form.com/favicon.ico',
+    tags: ['forms', 'validation', 'hooks'],
+    stars: 35000,
+    github: 'https://github.com/react-hook-form/react-hook-form',
+    overview:
+      'React Hook Form reduces the amount of code you need to write for forms in React with minimal re-rendering.',
+    features: [
+      'Easy validation',
+      'Minimal re-renders',
+      'Integrates with UI libraries',
+      'Tiny bundle size',
+    ],
+    installation: 'npm install react-hook-form',
+    usage: `import { useForm } from 'react-hook-form';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://react-hook-form.com/get-started' },
+      {
+        name: 'GitHub',
+        url: 'https://github.com/react-hook-form/react-hook-form',
+      },
+    ],
+  },
+  {
+    id: 11,
+    name: 'react-spring',
+    description: 'Spring-physics based animation library for React',
+    logo: 'https://react-spring.io/favicon.ico',
+    tags: ['animation', 'spring', 'physics'],
+    stars: 21000,
+    github: 'https://github.com/pmndrs/react-spring',
+    overview:
+      'React Spring is a spring-physics based animation library that powers most UI-related animation in React apps.',
+    features: [
+      'Declarative animations',
+      'Physics-based',
+      'Interoperable with gestures',
+      'Flexible',
+    ],
+    installation: 'npm install react-spring',
+    usage: `import { useSpring, animated } from 'react-spring';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://react-spring.io/' },
+      { name: 'GitHub', url: 'https://github.com/pmndrs/react-spring' },
+    ],
+  },
+  {
+    id: 12,
+    name: 'react-testing-library',
+    description: 'Simple and complete React DOM testing utilities',
+    logo: 'https://testing-library.com/img/octopus-64x64.png',
+    tags: ['testing', 'react', 'dom'],
+    stars: 15000,
+    github: 'https://github.com/testing-library/react-testing-library',
+    overview:
+      "Encourages better testing practices by focusing on testing behavior from the user's perspective.",
+    features: [
+      'Lightweight',
+      'Encourages good testing practices',
+      'Works with Jest and other test runners',
+    ],
+    installation: 'npm install @testing-library/react',
+    usage: `import { render, screen } from '@testing-library/react';`,
+    resources: [
+      {
+        name: 'Official Docs',
+        url: 'https://testing-library.com/docs/react-testing-library/intro',
+      },
+      {
+        name: 'GitHub',
+        url: 'https://github.com/testing-library/react-testing-library',
+      },
+    ],
+  },
+  {
+    id: 13,
+    name: 'framer-motion',
+    description: 'Production-ready motion library for React',
+    logo: 'https://www.framer.com/motion/img/favicon.ico',
+    tags: ['animation', 'motion', 'gesture'],
+    stars: 29000,
+    github: 'https://github.com/framer/motion',
+    overview:
+      "Framer Motion is an open source, production-ready library that's designed for React to make animations and gestures easy.",
+    features: [
+      'Simple animation API',
+      'Gesture support',
+      'Layout animations',
+      'Variants and orchestration',
+    ],
+    installation: 'npm install framer-motion',
+    usage: `import { motion } from 'framer-motion';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://www.framer.com/motion/' },
+      { name: 'GitHub', url: 'https://github.com/framer/motion' },
+    ],
+  },
+  {
+    id: 14,
+    name: 'react-table',
+    description:
+      'Hooks for building fast and extendable tables and datagrid for React',
+    logo: 'https://react-table.tanstack.com/favicon.ico',
+    tags: ['table', 'hooks', 'datagrid'],
+    stars: 27000,
+    github: 'https://github.com/TanStack/react-table',
+    overview:
+      'Lightweight, fast and extendable datagrid built for React using hooks.',
+    features: [
+      'Fully customizable',
+      'Sorting, filtering, pagination',
+      'Virtualization support',
+      'Plugin architecture',
+    ],
+    installation: 'npm install react-table',
+    usage: `import { useTable } from 'react-table';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://react-table.tanstack.com/' },
+      { name: 'GitHub', url: 'https://github.com/TanStack/react-table' },
+    ],
+  },
+  {
+    id: 15,
+    name: 'react-icons',
+    description: 'Include popular icons in your React projects easily',
+    logo: 'https://react-icons.github.io/react-icons/favicon.ico',
+    tags: ['icons', 'svg', 'components'],
+    stars: 21000,
+    github: 'https://github.com/react-icons/react-icons',
+    overview:
+      'Offers popular icon packs as React components for easy inclusion in your project.',
+    features: [
+      'Multiple icon libraries',
+      'SVG support',
+      'Tree-shaking support',
+      'Simple to use',
+    ],
+    installation: 'npm install react-icons',
+    usage: `import { FaBeer } from 'react-icons/fa';`,
+    resources: [
+      {
+        name: 'Official Docs',
+        url: 'https://react-icons.github.io/react-icons/',
+      },
+      { name: 'GitHub', url: 'https://github.com/react-icons/react-icons' },
+    ],
+  },
+  {
+    id: 16,
+    name: 'react-day-picker',
+    description: 'Flexible date picker component for React',
+    logo: 'https://react-day-picker.js.org/favicon.ico',
+    tags: ['date', 'picker', 'calendar'],
+    stars: 3700,
+    github: 'https://github.com/gpbl/react-day-picker',
+    overview:
+      'React Day Picker is a simple and flexible date picker component for React.',
+    features: [
+      'Single and multiple date selection',
+      'Customizable styles',
+      'Keyboard accessible',
+      'Internationalization support',
+    ],
+    installation: 'npm install react-day-picker',
+    usage: `import { DayPicker } from 'react-day-picker';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://react-day-picker.js.org/' },
+      { name: 'GitHub', url: 'https://github.com/gpbl/react-day-picker' },
+    ],
+  },
+  {
+    id: 17,
+    name: 'react-hot-toast',
+    description: 'React notification library for notifications and toasts',
+    logo: 'https://react-hot-toast.com/favicon.ico',
+    tags: ['notifications', 'toast', 'ui'],
+    stars: 9000,
+    github: 'https://github.com/timolins/react-hot-toast',
+    overview: 'Lightweight and customizable toast notifications for React.',
+    features: [
+      'Easy to use',
+      'Customizable',
+      'Supports promises',
+      'SSR support',
+    ],
+    installation: 'npm install react-hot-toast',
+    usage: `import toast from 'react-hot-toast';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://react-hot-toast.com/' },
+      { name: 'GitHub', url: 'https://github.com/timolins/react-hot-toast' },
+    ],
+  },
+  {
+    id: 18,
+    name: 'react-use',
+    description: 'Collection of essential React Hooks',
+    logo: 'https://react-use.github.io/react-use/favicon.ico',
+    tags: ['hooks', 'utilities', 'react'],
+    stars: 23000,
+    github: 'https://github.com/streamich/react-use',
+    overview:
+      'React-use is a collection of useful React hooks that simplify your React codebase.',
+    features: [
+      '150+ hooks',
+      'Easy to integrate',
+      'Well tested',
+      'Helps with side effects, state and lifecycle',
+    ],
+    installation: 'npm install react-use',
+    usage: `import { useToggle } from 'react-use';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://github.com/streamich/react-use' },
+      { name: 'GitHub', url: 'https://github.com/streamich/react-use' },
+    ],
+  },
+  {
+    id: 19,
+    name: 'react-virtualized',
+    description:
+      'React components for efficiently rendering large lists and tabular data',
+    logo: 'https://github.com/bvaughn/react-virtualized/raw/master/docs/img/react-virtualized.png',
+    tags: ['virtualization', 'performance', 'list'],
+    stars: 22000,
+    github: 'https://github.com/bvaughn/react-virtualized',
+    overview:
+      'React Virtualized provides a set of high-performance React components for rendering large data sets efficiently.',
+    features: [
+      'Virtualized lists and grids',
+      'Windowing',
+      'Cell measurer',
+      'Masonry layout',
+    ],
+    installation: 'npm install react-virtualized',
+    usage: `import { List } from 'react-virtualized';`,
+    resources: [
+      {
+        name: 'Official Docs',
+        url: 'https://bvaughn.github.io/react-virtualized/',
+      },
+      { name: 'GitHub', url: 'https://github.com/bvaughn/react-virtualized' },
+    ],
+  },
+  {
+    id: 21,
+    name: 'react-syntax-highlighter',
+    description: 'Syntax highlighting React component',
+    logo: 'https://github.com/react-syntax-highlighter/react-syntax-highlighter/raw/master/media/logo.png',
+    tags: ['syntax-highlighting', 'code', 'ui'],
+    stars: 9000,
+    github:
+      'https://github.com/react-syntax-highlighter/react-syntax-highlighter',
+    overview:
+      'Display source code with syntax highlighting using Prism or Highlight.js.',
+    features: [
+      'Multiple themes',
+      'Supports Prism and Highlight.js',
+      'Lightweight',
+      'Easy to use',
+    ],
+    installation: 'npm install react-syntax-highlighter',
+    usage: `import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';`,
+    resources: [
+      {
+        name: 'GitHub',
+        url: 'https://github.com/react-syntax-highlighter/react-syntax-highlighter',
+      },
+    ],
+  },
+  {
+    id: 22,
+    name: 'react-i18next',
+    description: 'Internationalization for React based on i18next',
+    logo: 'https://react.i18next.com/favicon.ico',
+    tags: ['i18n', 'localization', 'translations'],
+    stars: 9500,
+    github: 'https://github.com/i18next/react-i18next',
+    overview:
+      'Provides powerful and flexible translation management and formatting for React apps.',
+    features: [
+      'Hooks based API',
+      'SSR support',
+      'Lazy loading translations',
+      'Pluralization and formatting',
+    ],
+    installation: 'npm install react-i18next i18next',
+    usage: `import { useTranslation } from 'react-i18next';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://react.i18next.com/' },
+      { name: 'GitHub', url: 'https://github.com/i18next/react-i18next' },
+    ],
+  },
+  {
+    id: 23,
+    name: 'react-suspense-image',
+    description: 'Image component with Suspense support',
+    logo: 'https://github.com/Kureev/react-suspense-image/raw/master/logo.png',
+    tags: ['image', 'suspense', 'react'],
+    stars: 1200,
+    github: 'https://github.com/Kureev/react-suspense-image',
+    overview:
+      'An image component that leverages React Suspense to load images asynchronously.',
+    features: [
+      'Uses React Suspense',
+      'Supports lazy loading',
+      'Improves UX with fallback',
+      'Simple API',
+    ],
+    installation: 'npm install react-suspense-image',
+    usage: `import SuspenseImage from 'react-suspense-image';`,
+    resources: [
+      { name: 'GitHub', url: 'https://github.com/Kureev/react-suspense-image' },
+    ],
+  },
+  {
+    id: 24,
+    name: 'headlessui',
+    description: 'Completely unstyled, fully accessible UI components',
+    logo: 'https://headlessui.dev/favicon.ico',
+    tags: ['ui', 'headless', 'accessibility', 'components'],
+    stars: 27000,
+    github: 'https://github.com/tailwindlabs/headlessui',
+    overview:
+      'Headless UI provides unstyled, accessible UI primitives that integrate well with any styling framework.',
+    features: [
+      'Fully accessible components',
+      'Unstyled for full customization',
+      'Works great with Tailwind CSS',
+      'React and Vue support',
+    ],
+    installation: 'npm install @headlessui/react',
+    usage: `import { Dialog } from '@headlessui/react';`,
+    resources: [
+      { name: 'Official Docs', url: 'https://headlessui.dev/' },
+      { name: 'GitHub', url: 'https://github.com/tailwindlabs/headlessui' },
     ],
   },
 ]

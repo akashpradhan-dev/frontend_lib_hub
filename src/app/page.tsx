@@ -35,11 +35,11 @@ export default function Home() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
+            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
               {[
                 { number: '50+', label: 'Libraries' },
-                { number: '2M+', label: 'Downloads' },
-                { number: '15k+', label: 'Stars' },
+                { number: '20K+', label: 'Monthly visited' },
+                { number: '10K+', label: 'Developers Using It' },
                 { number: '99%', label: 'Uptime' },
               ].map((stat, index) => (
                 <div key={index} className="text-center">
@@ -51,7 +51,7 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
