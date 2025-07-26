@@ -2,6 +2,7 @@ import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
 import { ExternalLink } from 'lucide-react'
 import { LibraryCardProps } from '@/types/sharedTypes'
+import { SyntaxHighlight } from './SyntaxHighlight'
 
 export const LibaryDetailsTabs = ({ library }: LibraryCardProps) => {
   return (
@@ -46,21 +47,15 @@ export const LibaryDetailsTabs = ({ library }: LibraryCardProps) => {
           value="instalation"
           className="p-6 bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl"
         >
-          <div className={`bg-gray-900 rounded-lg p-4`}>
-            <pre className={`text-sm text-gray-300`}>
-              <code>{library?.installation}</code>
-            </pre>
-          </div>
+          <SyntaxHighlight codeBlock={library?.installation} />
         </TabsContent>
         <TabsContent
           value="usage"
           className="p-6 bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl"
         >
           <h3 className={`text-xl font-semibold mb-4 `}>Usage Example</h3>
-          <div className={`bg-gray-900 rounded-lg p-4 overflow-x-auto`}>
-            <pre className={`text-sm text-gray-300`}>
-              <code>{library?.usage}</code>
-            </pre>
+          <div>
+            <SyntaxHighlight codeBlock={library?.usage} />
           </div>
         </TabsContent>
         <TabsContent
