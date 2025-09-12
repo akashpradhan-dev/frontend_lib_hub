@@ -1,16 +1,13 @@
-import { _libraries } from '../../../../data/libraries'
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { ChevronLeft, Star } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { ChevronLeft } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { LibaryDetailsTabs } from '@/components/LibaryDetailsTabs'
 import Link from 'next/link'
+import { BaseResponse, Library } from '@/types/sharedTypes'
+
+interface ResponseType extends BaseResponse {
+  data: Library
+}
 
 const libraryDetails = async ({
   params,
@@ -18,64 +15,84 @@ const libraryDetails = async ({
   params: Promise<{ id: string }>
 }) => {
   const { id } = await params
-  const library = _libraries.find(lib => lib.id.toString() === id.toString())
-  if (!library) {
+  const baseUrl = process.env.API_URL as string
+
+  const url = baseUrl + '/v1/libraries/' + id
+  const data = await fetch(url, { cache: 'no-store' })
+  const res: ResponseType = await data.json()
+
+  const library = res.data
+
+  if (res.status !== 'success') {
     return (
-      <div className="text-center  text-lg h-[80vh] flex justify-center items-center">
-        Sorry, Library not found
+      <div className="flex h-[80vh] items-center justify-center text-lg text-muted-foreground">
+        Something went wrong
       </div>
     )
   }
+  if (!library) {
+    return (
+      <div className="flex h-[80vh] items-center justify-center text-lg text-muted-foreground">
+        No Data found
+      </div>
+    )
+  }
+
   return (
-    <div>
-      <section className="pt-6 md:pt-10 pb-20 px-4 sm:px-6 lg:px-8 ">
+    <div className="min-h-screen transition-colors duration-300">
+      <section className="pt-6 md:pt-10 pb-20 px-4 sm:px-6 lg:px-8">
+        {/* Back link */}
         <Link
           href="/lib"
-          className={`flex items-center gap-2 mb-6 cursor-pointer max-w-7xl mx-auto md:w-2/3`}
+          className="mb-6 flex max-w-7xl items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors md:w-2/3 mx-auto"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="h-4 w-4" />
           Back to Libraries
         </Link>
-        <div className="max-w-7xl mx-auto flex flex-col items-center w-full md:w-2/3">
-          <Card className="group sm:w-full  bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 hover:bg-slate-800/50 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <div>
-                  <h2 className="text-xl font-bold">{library?.name}</h2>
-                  <span className="text-slate-400 text-sm flex items-center">
-                    <Star className="inline mr-1 size-4 text-yellow-500" />
-                    {library?.stars}
-                  </span>
-                </div>
+
+        <div className="mx-auto flex w-full max-w-7xl flex-col items-center md:w-2/3">
+          {/* Card Section */}
+          <Card className="group w-full rounded-2xl border gap-2 bg-card/80 px-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
+            <CardHeader className="flex flex-row items-center justify-between p-0">
+              <CardTitle className="text-2xl font-bold tracking-tight">
+                {library.name}
               </CardTitle>
-
-              <CardAction>
-                <Button
-                  variant="link"
-                  className="text-blue-500 hover:text-blue-700 cursor-pointer"
+              {/* <CardAction>
+                <Link
+                  href={library.repositoryUrl}
+                  target="_blank"
+                  className="rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
                 >
-                  View on GitHub
-                </Button>
-              </CardAction>
+                  <EyeIcon className="h-5 w-5" />
+                </Link>
+              </CardAction> */}
             </CardHeader>
-            <CardContent className="">
-              <div className="flex items-center gap-2 mb-4 ">
-                <span className="text-slate-300 line-clamp-3">
-                  {library?.overview}
-                </span>
-              </div>
 
-              <div className="flex flex-wrap gap-2">
-                {library?.tags.map((tag, index) => (
-                  <Badge key={index} variant="secondary">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+            <CardContent className="space-y-4 p-0">
+              {/* Description */}
+              <p className="text-base text-muted-foreground leading-relaxed">
+                {library.description}
+              </p>
+
+              {/* Tags */}
+              {library?.tags?.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {library.tags.map((tag, index) => (
+                    <Badge
+                      key={index}
+                      variant="secondary"
+                      className="rounded-full px-3 py-1 text-xs font-medium"
+                    >
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
 
-          <div className="mt-8 w-full border p-2 bg-slate-800/30 backdrop-blur-sm border-slate-700/50 rounded-2xl">
+          {/* Tabs Section */}
+          <div className="mt-8 w-full rounded-2xl border bg-card/80 p-4 shadow-sm backdrop-blur-sm">
             <LibaryDetailsTabs library={library} />
           </div>
         </div>

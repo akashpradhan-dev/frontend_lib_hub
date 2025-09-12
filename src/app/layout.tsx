@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 import { Footer } from '@/components/Footer'
 import { Provider } from './Provider'
+import { cn } from '@/lib/utils'
+import { Header } from '@/components/Header'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -22,24 +24,32 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(geistSans.variable, geistMono.variable)}
+    >
+      <body className="antialiased">
         <Provider
           attribute="class"
           defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="bg-linear-to-b from-slate-900 via-[#180f1c] to-slate-950">
+          {/* Sticky Header */}
+          <Header />
+
+          {/* Main Content */}
+          <main className="min-h-screen max-w-7xl mx-auto px-6 py-12">
             {children}
-            <Footer />
-          </div>
+          </main>
+
+          {/* Footer */}
+          <Footer />
         </Provider>
       </body>
     </html>

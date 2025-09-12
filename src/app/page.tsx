@@ -7,64 +7,82 @@ import Link from 'next/link'
 export default function Home() {
   return (
     <>
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+      <section className="relative pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="max-w-7xl mx-auto text-center">
-          <div
-            className={`transition-all duration-1000 opacity-100 translate-y-0`}
-          >
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
+          {/* Headline */}
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-8 leading-tight">
+            {/* In light mode: darker gradient, in dark mode: lighter gradient */}
+            <span className="block bg-gradient-to-r from-slate-900 via-purple-700 to-pink-700 dark:from-white dark:via-purple-200 dark:to-pink-200 bg-clip-text text-transparent">
               Frontend Libraries
-              <span className="block bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Reimagined
-              </span>
-            </h1>
+            </span>
+            <span className="block bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 dark:from-purple-400 dark:via-pink-400 dark:to-red-400 bg-clip-text text-transparent">
+              Reimagined
+            </span>
+          </h1>
 
-            <p className="text-xl sm:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Discover the most powerful, modern frontend libraries curated for
-              developers who build exceptional web experiences
-            </p>
+          {/* Subheading */}
+          <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+            Discover the most powerful, modern frontend libraries curated for
+            developers who build exceptional web experiences.
+          </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
-              <Link
-                href={'/lib'}
-                className="group bg-gradient-to-r from-purple-500 to-pink-500 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20">
+            <Link
+              href="/lib"
+              className="group bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 px-8 py-4 rounded-full text-lg font-semibold shadow-lg shadow-purple-500/20 hover:shadow-xl hover:shadow-pink-500/30 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 text-white"
+            >
+              Explore Libraries
+              <ArrowRight
+                className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+                aria-hidden="true"
+              />
+            </Link>
+
+            <Link
+              href="/submit"
+              className="px-8 py-4 rounded-full border border-slate-300 dark:border-slate-700 text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-white hover:border-purple-500 hover:bg-purple-500/10 transition-all duration-300"
+            >
+              Submit a Library
+            </Link>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
+            {[
+              { number: '50+', label: 'Libraries' },
+              { number: '20K+', label: 'Monthly Visitors' },
+              { number: '10K+', label: 'Active Developers' },
+              { number: '99%', label: 'Uptime' },
+            ].map((stat, index) => (
+              <div
+                key={index}
+                className="text-center rounded-xl bg-slate-100 dark:bg-white/5 p-6 hover:bg-slate-200 dark:hover:bg-white/10 transition-colors"
               >
-                Explore Libraries
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            {/* Stats */}
-            {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
-              {[
-                { number: '50+', label: 'Libraries' },
-                { number: '20K+', label: 'Monthly visited' },
-                { number: '10K+', label: 'Developers Using It' },
-                { number: '99%', label: 'Uptime' },
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    {stat.number}
-                  </div>
-                  <div className="text-slate-400 text-sm mt-1">
-                    {stat.label}
-                  </div>
+                <div className="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                  {stat.number}
                 </div>
-              ))}
-            </div> */}
+                <div className="text-slate-600 dark:text-slate-400 text-sm mt-2">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronDown
+            className="w-6 h-6 text-slate-600 dark:text-slate-400"
+            aria-hidden="true"
+          />
+        </div>
       </section>
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <ChevronDown className="w-6 h-6 text-slate-400" />
-      </div>
 
       {/* Features section */}
-
       <Features />
 
-      {/* Testimonials section */}
+      {/* Testimonials / Library Marquee */}
       <LibraryMarquee />
 
       {/* CTA section */}

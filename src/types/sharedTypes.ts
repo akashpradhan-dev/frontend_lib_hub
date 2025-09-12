@@ -1,23 +1,23 @@
-export interface LibraryResource {
-  name: string
-  url: string
+export interface BaseResponse {
+  status: string
+  message: string
 }
 
 export interface Library {
-  id: number
+  _id: string
   name: string
   description: string
-  logo: string
+  version: string
+  repositoryUrl: string
+  homepageUrl: string
   tags: string[]
-  stars: number
-  github: string
-  overview: string
-  features: string[]
-  installation: string
-  usage: string
-  resources: LibraryResource[]
+  installation?: string
+  exampleUsage: string
+  status: string
+  createdAt: string
+  updatedAt: string
 }
 
-export interface LibraryCardProps {
-  library: Library
+export interface LibrariesResponse extends BaseResponse {
+  data: Library[]
 }

@@ -1,4 +1,3 @@
-// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card'
 import { Marquee } from '@/components/ui/marquee'
 import { Code } from 'lucide-react'
@@ -56,24 +55,31 @@ function TestimonialCard({
   color,
 }: (typeof libraries)[number]) {
   return (
-    <Card className="w-64 group bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl px-3 py-4 hover:bg-slate-800/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/10">
+    <Card
+      className="w-64 group 
+      bg-slate-100/60 dark:bg-slate-800/30 
+      backdrop-blur-sm border 
+      border-slate-200 dark:border-slate-700/50 
+      rounded-2xl px-3 py-4 
+      hover:bg-slate-200/70 dark:hover:bg-slate-800/50 
+      transition-all duration-300 
+      hover:scale-105 hover:shadow-xl hover:shadow-purple-500/10"
+    >
       <CardContent>
-        <div className="flex items-center gap-2.5">
-          <div className="flex flex-col items-center justify-start">
-            <div className="flex items-center gap-2 text-lg font-semibold text-white">
-              <div
-                className={`w-9 h-9 bg-gradient-to-r ${color} rounded-xl group-hover:scale-110 transition-transform duration-300 flex items-center justify-center`}
-              >
-                <Code className="w-6 h-6 text-white" />
-              </div>
-              {name}
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2 text-lg font-semibold text-slate-900 dark:text-white">
+            <div
+              className={`w-9 h-9 bg-gradient-to-r ${color} rounded-xl group-hover:scale-110 transition-transform duration-300 flex items-center justify-center`}
+            >
+              <Code className="w-6 h-6 text-white" />
             </div>
-            <p className="text-xs font-medium text-muted-foreground mt-3">
-              {category} - {stars} stars
-            </p>
+            {name}
           </div>
+          <p className="text-xs font-medium text-slate-600 dark:text-muted-foreground mt-3">
+            {category} · {stars} stars
+          </p>
         </div>
-        <blockquote className="mt-3 text-sm text-econdary-foreground truncate">
+        <blockquote className="mt-3 text-sm text-slate-700 dark:text-secondary-foreground truncate">
           {description}
         </blockquote>
       </CardContent>
@@ -84,24 +90,29 @@ function TestimonialCard({
 export default function LibraryMarquee() {
   return (
     <div className="relative flex w-full flex-col items-center justify-center gap-1 overflow-hidden py-8">
-      <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+      <h2
+        className="text-4xl font-bold text-center mb-16 
+        bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-300 
+        bg-clip-text text-transparent"
+      >
         Featured Libraries
       </h2>
 
-      {/* Marquee moving left to right (default) */}
+      {/* Marquee moving left to right */}
       <Marquee
         pauseOnHover
         repeat={3}
-        className="[--duration:120s] whitespace-nowrap "
+        className="[--duration:120s] whitespace-nowrap"
       >
-        {libraries.map(review => (
-          <TestimonialCard key={review.name} {...review} />
+        {libraries.map(lib => (
+          <TestimonialCard key={lib.name} {...lib} />
         ))}
       </Marquee>
-      {/* Marquee moving right to left (reverse) */}
+
+      {/* Marquee moving right to left */}
       <Marquee pauseOnHover reverse repeat={3} className="[--duration:120s]">
-        {libraries.map(review => (
-          <TestimonialCard key={review.name} {...review} />
+        {libraries.map(lib => (
+          <TestimonialCard key={lib.name} {...lib} />
         ))}
       </Marquee>
     </div>

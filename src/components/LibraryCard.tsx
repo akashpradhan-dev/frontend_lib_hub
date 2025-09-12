@@ -10,45 +10,65 @@ import {
 import { Button } from './ui/button'
 import Link from 'next/link'
 import { Badge } from './ui/badge'
-import { Star } from 'lucide-react'
-import { LibraryCardProps } from '@/types/sharedTypes'
+import { HeartIcon } from 'lucide-react'
+import { Library } from '@/types/sharedTypes'
+
+interface LibraryCardProps {
+  library: Library
+}
 
 export const LibraryCard = ({ library }: LibraryCardProps) => {
   return (
-    <Link href={`/lib/${library.id}`} className="no-underline">
-      <Card className="group bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 hover:bg-slate-800/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/10">
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-bold capitalize">{library.name}</h2>
-              <span className="text-slate-400 text-sm flex items-center">
-                <Star className="inline mr-1 size-4 text-yellow-500" />
-                {library.stars}
-              </span>
-            </div>
+    <Link
+      href={`/lib/${library._id}`}
+      className="block h-full no-underline transition-transform duration-300 hover:scale-[1.03]"
+    >
+      <Card className="flex h-full flex-col justify-between rounded-2xl border bg-card/80 p-6 shadow-sm backdrop-blur-sm transition-all hover:shadow-lg hover:shadow-primary/10">
+        {/* Header */}
+        <CardHeader className="flex flex-row items-start justify-between p-0">
+          <CardTitle className="text-xl font-semibold capitalize tracking-tight">
+            {library.name}
           </CardTitle>
 
           <CardAction>
-            <Button variant="link">Like</Button>
+            <Button
+              size="icon"
+              variant="ghost"
+              className="rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+              aria-label="Add to favorites"
+            >
+              <HeartIcon className="h-5 w-5" />
+            </Button>
           </CardAction>
         </CardHeader>
-        <CardContent className="">
-          <div className="flex items-center gap-2 mb-4 ">
-            <span className="text-slate-300 line-clamp-3">
-              {library.overview}
-            </span>
-          </div>
 
-          <div className="flex flex-wrap gap-2">
-            {library?.tags?.map((tag, index) => (
-              <Badge key={index} variant="secondary">
-                {tag}
-              </Badge>
-            ))}
-          </div>
+        {/* Content */}
+        <CardContent className="mt-4 flex-1 space-y-4 p-0">
+          <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+            {library.description}
+          </p>
+
+          {library?.tags?.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {library.tags.map((tag, index) => (
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className="rounded-full px-3 py-0.5 text-xs font-medium"
+                >
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          )}
         </CardContent>
-        <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full cursor-pointer">
+
+        {/* Footer */}
+        <CardFooter className="mt-6 p-0">
+          <Button
+            variant="default"
+            className="w-full rounded-xl font-medium transition-colors"
+          >
             View Details
           </Button>
         </CardFooter>
