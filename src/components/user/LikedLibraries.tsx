@@ -1,10 +1,17 @@
 'use client'
 import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Github } from 'lucide-react'
 import { useLikedLibrariesQuery } from '@/services/query/likedLibraries'
+import LikeButton from '../LikeButton'
 
 export const LikedLibraries = () => {
   const { data, status, error } = useLikedLibrariesQuery()
@@ -27,6 +34,7 @@ export const LikedLibraries = () => {
   const libraries = data.data.libraries
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {libraries.length == 0 && <span>No Library found</span>}
       {libraries.map(lib => (
         <Card
           key={lib._id}
@@ -51,6 +59,10 @@ export const LikedLibraries = () => {
                 </a>
               </Button>
             </CardTitle>
+
+            <CardAction>
+              <LikeButton libraryId={lib._id} liked={false} />
+            </CardAction>
           </CardHeader>
 
           <CardContent className="flex flex-col justify-between flex-1 space-y-4">

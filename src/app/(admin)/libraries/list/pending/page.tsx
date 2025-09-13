@@ -1,53 +1,14 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
-interface Library {
-  _id: string
-  name: string
-  description: string
-  version: string
-  repositoryUrl: string
-  homepageUrl?: string
-  tags: string[]
-  status: string
-}
+import { usePendingMutation } from '@/services/mutation/pendingAction'
+import { usePendingLibrariesQuery } from '@/services/query/pending'
+import toast from 'react-hot-toast'
 
 export default function PendingLibrariesPage() {
-  const [libraries, setLibraries] = useState<Library[]>([])
-  const [loading, setLoading] = useState(true)
+  const { data, status, error } = usePendingLibrariesQuery()
+  const { mutate } = usePendingMutation()
 
-  useEffect(() => {
-    const fetchPending = async () => {
-      try {
-        const res = await fetch('/api/libraries?status=pending')
-        const data = await res.json()
-        setLibraries(data)
-      } catch (error) {
-        console.error('Error fetching pending libraries:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchPending()
-  }, [])
-
-  const handleAction = async (id: string, action: 'approved' | 'rejected') => {
-    try {
-      const res = await fetch(`/api/libraries/${id}/review`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: action }),
-      })
-      if (res.ok) {
-        setLibraries(prev => prev.filter(lib => lib._id !== id))
-      }
-    } catch (error) {
-      console.error(`Error updating library ${id}:`, error)
-    }
-  }
-
-  if (loading) {
+  if (status === 'pending') {
     return (
       <p className="text-center py-10 text-slate-500">
         Loading pending libraries...
@@ -55,11 +16,35 @@ export default function PendingLibrariesPage() {
     )
   }
 
-  if (libraries.length === 0) {
+  if (status === 'error') {
+    return (
+      <p className="text-center py-10 text-slate-500">
+        Something went wrong {error.message}
+      </p>
+    )
+  }
+
+  const libraries = data?.data
+
+  if (libraries?.length === 0) {
     return (
       <p className="text-center py-10 text-slate-500">
         No pending libraries 🎉
       </p>
+    )
+  }
+
+  const handleAction = async (id: string, action: 'approved' | 'rejected') => {
+    mutate(
+      {
+        libraryId: id,
+        action,
+      },
+      {
+        onSuccess: () => {
+          toast.success(`library ${action} sucessfully`)
+        },
+      },
     )
   }
 
@@ -94,7 +79,7 @@ export default function PendingLibrariesPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
-            {libraries.map(lib => (
+            {libraries?.map(lib => (
               <tr
                 key={lib._id}
                 className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition"
