@@ -13,6 +13,7 @@ interface AuthContextType {
   login: (userData: User) => void
   logout: () => void
   isLoggedIn: boolean
+  setProfile: (user: User) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -21,35 +22,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
-    const token = Cookies.get('authToken')
     const role = Cookies.get('userRole')
 
-    if (token && role) {
+    if (role) {
       setUser({
         email: '',
         name: '',
         role: role as 'admin' | 'user',
-        token,
       })
     }
   }, [])
 
   const login = (userData: User) => {
-    Cookies.set('authToken', userData.token, { expires: 7, secure: true })
     Cookies.set('userRole', userData.role, { expires: 7, secure: true })
     setUser(userData)
   }
 
   const logout = () => {
-    Cookies.remove('authToken')
     Cookies.remove('userRole')
     setUser(null)
   }
 
-  const isLoggedIn = !!user?.token
+  const setProfile = (user: User) => {
+    setUser(user)
+  }
+
+  const isLoggedIn = !!user?.role
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoggedIn }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, isLoggedIn, setProfile }}
+    >
       {children}
     </AuthContext.Provider>
   )

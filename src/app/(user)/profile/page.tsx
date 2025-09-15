@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { PencilIcon, HeartIcon, Code } from 'lucide-react'
 import { LikedLibraries } from '@/components/user/LikedLibraries'
 import MyLibraries from '@/components/user/MyLibraries'
+import { ProfileSection } from '@/components/user/ProfileSection'
 
 // Dummy data
 const dummyUser = {
@@ -50,25 +51,7 @@ const UserProfilePage = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Profile Header */}
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-12 mb-12">
-        {/* <Avatar
-          src={dummyUser.avatarUrl}
-          className="w-28 h-28 ring-2 ring-purple-500 dark:ring-pink-500"
-        /> */}
-        <div className="text-center md:text-left">
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-            {dummyUser.name}
-          </h1>
-          <p className="text-slate-500 dark:text-slate-400">
-            {dummyUser.email}
-          </p>
-          {dummyUser.bio && (
-            <p className="mt-2 text-slate-600 dark:text-slate-300">
-              {dummyUser.bio}
-            </p>
-          )}
-        </div>
-      </div>
+      <ProfileSection />
 
       {/* Tabs */}
       <Tabs value={tab} onValueChange={setTab} className="w-full">

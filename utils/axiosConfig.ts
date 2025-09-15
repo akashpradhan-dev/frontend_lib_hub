@@ -1,12 +1,11 @@
 import axios from 'axios'
-import Cookies from 'js-cookie'
-// Create an instance of Axios with a base URL
 
 const api = axios.create({
   baseURL: 'http://localhost:5000/api',
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true,
 })
 
 // Request interceptor to check for FormData and set the correct Content-Type
@@ -14,11 +13,6 @@ api.interceptors.request.use(
   config => {
     if (config.data instanceof FormData) {
       delete config.headers['Content-Type']
-    }
-
-    const token = Cookies.get('authToken')
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`
     }
 
     return config

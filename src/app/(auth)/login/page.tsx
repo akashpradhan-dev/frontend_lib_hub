@@ -33,7 +33,6 @@ const loginSchema = z.object({
 
 type Inputs = z.infer<typeof loginSchema>
 
-/* ---------- Component ---------- */
 export default function LoginPage() {
   const { login } = useAuth()
 
@@ -73,7 +72,8 @@ export default function LoginPage() {
   }
 
   const handleGoogleLogin = () => {
-    console.log('Google login clicked')
+    // Point this to your backend route
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/login/google`
   }
 
   return (

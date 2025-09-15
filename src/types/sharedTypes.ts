@@ -1,5 +1,5 @@
 export interface BaseResponse {
-  status: string
+  status: 'success' | 'failed'
   message: string
 }
 

@@ -16,14 +16,16 @@ import { useAuth } from '@/contexts/AuthContext'
 import { Button } from './ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { User } from '@/services/mutation/login'
+import { useLogoutMutation } from '@/services/mutation/logout'
+import { useRouter } from 'next/navigation'
+import { useMeQuery } from '@/services/query/useMeQuery'
 
 export function Header() {
   const { isLoggedIn, logout, user } = useAuth()
-
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
-  // Ensures hydration consistency
+  // Ensure hydration consistency
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -34,7 +36,6 @@ export function Header() {
         className="p-2 cursor-pointer rounded-full bg-white/5 hover:bg-white/10 transition"
         aria-label="Toggle Theme"
       >
-        {/* You can show a placeholder or nothing until mounted */}
         <div className="w-5 h-5" />
       </button>
     )
@@ -67,7 +68,7 @@ export function Header() {
             )}
           </button>
 
-          {/* Login */}
+          {/* Login / User Popover */}
           {isLoggedIn ? (
             <UserPopover logout={logout} user={user} />
           ) : (
@@ -91,16 +92,40 @@ export function Header() {
   )
 }
 
-interface UserPopover {
+interface UserPopoverProps {
   logout: () => void
   user: User | null
 }
-const UserPopover = ({ logout, user }: UserPopover) => {
+
+const UserPopover = ({ logout, user }: UserPopoverProps) => {
+  const { mutate } = useLogoutMutation()
+  const { data, status } = useMeQuery()
+  const { setProfile } = useAuth()
+  const router = useRouter()
+
+  // Update profile only once when query succeeds
+  useEffect(() => {
+    if (status === 'success' && data?.data) {
+      setProfile(data.data)
+    }
+  }, [status, data, setProfile])
+
+  const handleLogout = () => {
+    mutate(undefined, {
+      onSuccess: () => {
+        logout()
+        router.push('/login')
+      },
+      onError: error => console.error('Logout failed', error),
+    })
+  }
+
   return (
     <Popover>
       <PopoverTrigger>
-        <CircleUser className="size-6 text-gray-600" />
+        <CircleUser className="w-6 h-6 text-gray-600 cursor-pointer" />
       </PopoverTrigger>
+
       <PopoverContent>
         <div className="p-2 flex flex-col space-y-1">
           <Button asChild variant="ghost" size="sm" className="justify-start">
@@ -130,13 +155,12 @@ const UserPopover = ({ logout, user }: UserPopover) => {
           )}
         </div>
 
-        {/* Logout */}
         <div className="p-2">
           <Button
             variant="secondary"
             size="sm"
             className="w-full justify-start cursor-pointer"
-            onClick={logout}
+            onClick={handleLogout}
           >
             <LogOut className="mr-2 h-4 w-4" /> Logout
           </Button>
