@@ -5,8 +5,8 @@ import {
   useState,
   ReactNode,
 } from 'react'
-import Cookies from 'js-cookie'
 import { User } from '../services/mutation/login'
+import { useMeQuery } from '@/services/query/useMeQuery'
 
 interface AuthContextType {
   user: User | null
@@ -14,44 +14,43 @@ interface AuthContextType {
   logout: () => void
   isLoggedIn: boolean
   setProfile: (user: User) => void
+  isAuthResolved: boolean
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null)
+  const [isAuthResolved, setAuthResolved] = useState(false)
+
+  const { data, status } = useMeQuery()
 
   useEffect(() => {
-    const role = Cookies.get('userRole')
-
-    if (role) {
-      setUser({
-        email: '',
-        name: '',
-        role: role as 'admin' | 'user',
-      })
+    if (status === 'success' && data?.data) {
+      setUser(data.data)
     }
-  }, [])
+    if (status === 'error') {
+      setUser(null)
+    }
+    if (status !== 'pending') {
+      setAuthResolved(true)
+    }
+  }, [status, data])
 
-  const login = (userData: User) => {
-    Cookies.set('userRole', userData.role, { expires: 7, secure: true })
-    setUser(userData)
-  }
-
-  const logout = () => {
-    Cookies.remove('userRole')
-    setUser(null)
-  }
-
-  const setProfile = (user: User) => {
-    setUser(user)
-  }
-
-  const isLoggedIn = !!user?.role
+  const login = (userData: User) => setUser(userData)
+  const logout = () => setUser(null)
+  const setProfile = (user: User) => setUser(user)
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, isLoggedIn, setProfile }}
+      value={{
+        user,
+        login,
+        logout,
+        setProfile,
+        isLoggedIn: !!user,
+        isAuthResolved,
+      }}
     >
       {children}
     </AuthContext.Provider>

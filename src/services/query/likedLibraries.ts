@@ -3,9 +3,7 @@ import api from '../../../utils/axiosConfig'
 import { BaseResponse, Library } from '@/types/sharedTypes'
 
 interface LibraryResponse extends BaseResponse {
-  data: {
-    libraries: Library[]
-  }
+  data: Library[]
 }
 
 export const fetchLikedLibraries = async () => {

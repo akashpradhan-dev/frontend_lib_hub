@@ -22,6 +22,7 @@ export const useLikeMutation = () => {
     mutationFn: LikeAction,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['liked-libraries'] })
+      queryClient.invalidateQueries({ queryKey: ['libraries'] })
     },
   })
 }

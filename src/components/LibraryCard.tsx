@@ -28,7 +28,7 @@ export const LibraryCard = ({ library }: LibraryCardProps) => {
           </CardTitle>
 
           <CardAction>
-            <LikeButton libraryId={library._id} liked />
+            <LikeButton libraryId={library._id} liked={library?.liked} />
           </CardAction>
         </CardHeader>
         <Link href={`/lib/${library._id}`}>

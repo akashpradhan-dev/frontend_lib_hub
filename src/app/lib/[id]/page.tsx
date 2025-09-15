@@ -15,7 +15,7 @@ const libraryDetails = async ({
   params: Promise<{ id: string }>
 }) => {
   const { id } = await params
-  const baseUrl = process.env.API_URL as string
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL as string
 
   const url = baseUrl + '/v1/libraries/' + id
   const data = await fetch(url, { cache: 'no-store' })

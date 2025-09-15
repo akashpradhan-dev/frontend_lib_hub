@@ -31,11 +31,12 @@ export const LikedLibraries = () => {
     )
   }
 
-  const libraries = data.data.libraries
+  const libraries = data?.data
+
   return (
     <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {libraries.length == 0 && <span>No Library found</span>}
-      {libraries.map(lib => (
+      {libraries?.map(lib => (
         <Card
           key={lib._id}
           className="h-full flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow"
@@ -61,7 +62,7 @@ export const LikedLibraries = () => {
             </CardTitle>
 
             <CardAction>
-              <LikeButton libraryId={lib._id} liked={false} />
+              <LikeButton libraryId={lib._id} liked={lib?.liked} />
             </CardAction>
           </CardHeader>
 

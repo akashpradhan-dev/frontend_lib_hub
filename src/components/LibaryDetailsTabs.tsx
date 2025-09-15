@@ -22,7 +22,7 @@ export const LibaryDetailsTabs = ({ library }: LibaryDetailsTabsProps) => {
           value="installation"
           className="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all data-[state=active]:bg-background data-[state=active]:shadow-sm"
         >
-          Installation
+          Usage
         </TabsTrigger>
         <TabsTrigger
           value="resources"
@@ -55,10 +55,10 @@ export const LibaryDetailsTabs = ({ library }: LibaryDetailsTabsProps) => {
         value="installation"
         className="mt-6 rounded-xl border bg-card/80 p-6 shadow-sm backdrop-blur-sm"
       >
-        {library?.installation ? (
-          <SyntaxHighlight codeBlock={library.installation} />
+        {library?.exampleUsage ? (
+          <SyntaxHighlight codeBlock={library.exampleUsage} />
         ) : (
-          <p className="text-sm text-muted-foreground">Not specified</p>
+          <p className="text-sm text-muted-foreground">No example provided.</p>
         )}
       </TabsContent>
 

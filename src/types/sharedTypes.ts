@@ -16,6 +16,7 @@ export interface Library {
   status: string
   createdAt: string
   updatedAt: string
+  liked?: boolean
 }
 
 export interface LibrariesResponse extends BaseResponse {

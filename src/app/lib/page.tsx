@@ -1,22 +1,16 @@
+'use client'
+
 import { LibraryCard } from '@/components/LibraryCard'
 import React from 'react'
-import { Library } from '@/types/sharedTypes'
+import { useLibrariesQuery } from '@/services/query/libraries'
 
-const Libraries = async () => {
-  const baseUrl = process.env.API_URL as string
-  const url = baseUrl + '/v1/libraries'
-  const data = await fetch(url, { cache: 'no-store' })
-  const res = await data.json()
+const Libraries = () => {
+  const { data, status } = useLibrariesQuery()
 
-  if (res.status === 'failed') {
-    return (
-      <div className="flex h-[80vh] items-center justify-center text-lg text-muted-foreground">
-        Something went wrong
-      </div>
-    )
+  if (status === 'pending') {
+    return <div>loading...</div>
   }
-
-  const list: Library[] = res.data
+  const list = data?.data
 
   return (
     <div className="min-h-screen transition-colors duration-300">

@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { QueryClient, useMutation } from '@tanstack/react-query'
 import api from '../../../utils/axiosConfig'
 import { BaseResponse, Library } from '@/types/sharedTypes'
 
@@ -38,7 +38,15 @@ const createLibrary = async ({
   return response.data
 }
 
-export const useSaveLibraryMutation = () =>
-  useMutation({
+export const useSaveLibraryMutation = () => {
+  const queryclient = new QueryClient()
+
+  return useMutation({
     mutationFn: createLibrary,
+    onSuccess: () => {
+      queryclient.invalidateQueries({
+        queryKey: ['my-libraries'],
+      })
+    },
   })
+}

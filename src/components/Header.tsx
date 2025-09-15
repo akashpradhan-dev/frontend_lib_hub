@@ -19,13 +19,16 @@ import { User } from '@/services/mutation/login'
 import { useLogoutMutation } from '@/services/mutation/logout'
 import { useRouter } from 'next/navigation'
 import { useMeQuery } from '@/services/query/useMeQuery'
+import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 
 export function Header() {
-  const { isLoggedIn, logout, user } = useAuth()
+  const { isLoggedIn } = useProtectedRoute()
+  const { logout, user } = useAuth()
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  console.log(user)
 
-  // Ensure hydration consistency
+  // Ensure hydration consistenc\
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -123,7 +126,20 @@ const UserPopover = ({ logout, user }: UserPopoverProps) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <CircleUser className="w-6 h-6 text-gray-600 cursor-pointer" />
+        <div className="flex items-center space-x-3 cursor-pointer group">
+          {/* User Avatar */}
+          <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm font-semibold shadow-md transition-transform duration-200 group-hover:scale-105">
+            {data?.data.name.slice(0, 2)}
+          </div>
+
+          {/* Username */}
+          <span className="text-white font-medium text-sm md:text-base transition-colors duration-200 group-hover:text-gray-300">
+            {data?.data.name}
+          </span>
+
+          {/* Optional Icon */}
+          {/* <CircleUser className="w-6 h-6 text-gray-400 transition-colors duration-200 group-hover:text-gray-200" /> */}
+        </div>
       </PopoverTrigger>
 
       <PopoverContent>

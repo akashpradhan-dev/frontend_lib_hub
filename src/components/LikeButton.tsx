@@ -3,24 +3,30 @@ import { Button } from './ui/button'
 import { HeartIcon } from 'lucide-react'
 import { useLikeMutation } from '@/services/mutation/likeLibrary'
 import toast from 'react-hot-toast'
+import { useAuth } from '@/contexts/AuthContext'
 
 const LikeButton = ({
   libraryId,
-  liked,
+  liked = false,
 }: {
   libraryId: string
-  liked: boolean
+  liked: boolean | undefined
 }) => {
+  const { isLoggedIn } = useAuth()
   const { mutate, status } = useLikeMutation()
   const handleLike = () => {
+    if (!isLoggedIn) {
+      toast.error('Please login to like')
+      return
+    }
     mutate(
       {
         libraryId,
-        liked,
+        liked: !liked,
       },
       {
         onSuccess: () => {
-          toast.success('you have liked this library')
+          toast.success(`you have ${liked ? 'unliked' : 'like'} this library`)
         },
       },
     )
@@ -34,9 +40,9 @@ const LikeButton = ({
       onClick={handleLike}
     >
       {liked ? (
-        <HeartIcon className="h-5 w-5" />
-      ) : (
         <HeartIcon className="h-5 w-5 text-red-500" fill="red" />
+      ) : (
+        <HeartIcon className="h-5 w-5" />
       )}
     </Button>
   )

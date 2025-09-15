@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import toast from 'react-hot-toast'
 import { useMeQuery } from '@/services/query/useMeQuery'
+import { useEffect } from 'react'
 
 export default function OAuthSuccessPage() {
   const router = useRouter()
@@ -30,25 +31,40 @@ export default function OAuthSuccessPage() {
     return null
   }
 
-  if (status === 'success') {
-    login(data.data)
-    toast.success('Google login successful!')
-    router.replace(data.data.role === 'admin' ? '/dashboard' : '/profile')
-  }
-
-  if (status === 'error') {
-    toast.error('Google login failed. Please try again.')
-    router.replace('/login')
-  }
+  useEffect(() => {
+    if (status === 'success' && data?.status === 'success') {
+      const user = data.data
+      login(user)
+      toast.success('Google login successful!', { id: 'login_success' })
+      router.replace(user.role === 'admin' ? '/dashboard' : '/profile')
+    } else if (status === 'error') {
+      toast.error('Google login failed. Redirecting to login.')
+      router.replace('/login')
+    }
+  }, [status, data, login, router])
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4">
-      <div className="bg-white/20 backdrop-blur-md rounded-xl shadow-lg p-10 text-center max-w-md w-full">
-        <h1 className="text-2xl font-bold mb-4">Logging you in...</h1>
-        <p className="mb-6 text-white/90">
-          We are connecting your Google account. Please wait a moment.
+    <section className="flex items-center justify-center min-h-[90vh] ">
+      <div className="bg-white/5 backdrop-blur-md rounded-3xl shadow-lg p-12 text-center max-w-md w-full animate-fadeIn">
+        {/* Title */}
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          Logging You In
+        </h1>
+
+        {/* Subtitle */}
+        <p className="text-white/70 text-base md:text-lg mb-8">
+          Connecting your Google account. Please wait a moment.
         </p>
-        {renderContent()}
+
+        {/* Loading Spinner */}
+        <div className="flex justify-center mb-6">
+          <div className="size-12 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
+        </div>
+
+        {/* Optional dynamic content */}
+        <div className="text-white/50 text-sm md:text-base">
+          {renderContent()}
+        </div>
       </div>
     </section>
   )
