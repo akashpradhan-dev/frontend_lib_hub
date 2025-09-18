@@ -2,6 +2,8 @@
 
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import {
   Form,
   FormControl,
@@ -18,58 +20,114 @@ import { Badge } from '@/components/ui/badge'
 import { useSaveLibraryMutation } from '@/services/mutation/addNewLibrary'
 import { useAuth } from '@/contexts/AuthContext'
 import toast from 'react-hot-toast'
+import { SingleSelect } from '@/components/SingleSelect'
+import { useRouter } from 'next/navigation'
 
-type LibraryFormData = {
-  name: string
-  description: string
-  version: string
-  repositoryUrl: string
-  homepageUrl: string
-  tags: string
-  exampleUsage: string
-}
+export const categoryOptions = [
+  { key: 'FrontEnd', name: 'Frontend' },
+  { key: 'Backend', name: 'Backend' },
+  { key: 'Mobile', name: 'Mobile' },
+  { key: 'DevOps', name: 'DevOps' },
+]
+
+const languageOptions = [
+  { key: 'JavaScript', name: 'JavaScript' },
+  { key: 'TypeScript', name: 'TypeScript' },
+  { key: 'Python', name: 'Python' },
+  { key: 'Java', name: 'Java' },
+  { key: 'C#', name: 'C#' },
+  { key: 'Go', name: 'Go' },
+  { key: 'Ruby', name: 'Ruby' },
+  { key: 'PHP', name: 'PHP' },
+  { key: 'C++', name: 'C++' },
+  { key: 'Other', name: 'Other' },
+]
+
+const frameworkOptions = [
+  { key: 'React', name: 'React' },
+  { key: 'Angular', name: 'Angular' },
+  { key: 'Vue.js', name: 'Vue.js' },
+  { key: 'Svelte', name: 'Svelte' },
+  { key: 'Node.js', name: 'Node.js' },
+  { key: 'NestJS', name: 'NestJS' },
+  { key: 'Django', name: 'Django' },
+  { key: 'Flask', name: 'Flask' },
+  { key: 'FastAPI', name: 'FastAPI' },
+  { key: 'Spring Boot', name: 'Spring Boot' },
+  { key: 'Ruby on Rails', name: 'Ruby on Rails' },
+  { key: 'Laravel', name: 'Laravel' },
+  { key: 'Other', name: 'Other' },
+]
+
+const libraryTypeOptions = [
+  { key: 'UI Library', name: 'UI Library' },
+  { key: 'State Management', name: 'State Management' },
+  { key: 'Form Handling', name: 'Form Handling' },
+  { key: 'Styling', name: 'Styling' },
+  { key: 'Animation', name: 'Animation' },
+  { key: 'Testing', name: 'Testing' },
+  { key: 'Database', name: 'Database' },
+  { key: 'Auth', name: 'Auth' },
+  { key: 'Utility', name: 'Utility' },
+  { key: 'Build Tool', name: 'Build Tool' },
+  { key: 'Other', name: 'Other' },
+]
+
+/* ---------------- Schema ---------------- */
+const librarySchema = z.object({
+  name: z.string().min(1, 'Library name is required'),
+  description: z.string().min(1, 'Description is required'),
+  repositoryUrl: z
+    .string('Enter a valid URL')
+    .min(1, 'Repository URL is required'),
+  homepageUrl: z.string('Enter a valid URL').optional().or(z.literal('')),
+  tags: z.string().optional(),
+  exampleUsage: z.string().optional(),
+  category: z.string({
+    message: 'Please select an email to display.',
+  }),
+  language: z.string().optional(),
+  framework: z.string().optional(),
+  libraryType: z.string().optional(),
+})
+
+type LibraryFormData = z.infer<typeof librarySchema>
 
 export default function AddNew() {
   const { user } = useAuth()
   const { mutate, status } = useSaveLibraryMutation()
+  const router = useRouter()
   const form = useForm<LibraryFormData>({
+    resolver: zodResolver(librarySchema),
     defaultValues: {
       name: '',
       description: '',
-      version: '1.0',
       repositoryUrl: '',
       homepageUrl: '',
       tags: '',
       exampleUsage: '',
+      category: '',
+      language: '',
+      framework: '',
+      libraryType: '',
     },
   })
 
   const tags = form
     .watch('tags')
-    .split(',')
+    ?.split(',')
     .map(tag => tag.trim())
     .filter(Boolean)
 
   const onSubmit = (data: LibraryFormData) => {
-    const userId = user?._id
-    const payload = { ...data, tags, createdBy: userId }
+    const payload = { ...data, tags, createdBy: user?._id }
     mutate(payload, {
       onSuccess: () => {
-        form.reset({
-          name: '',
-          description: '',
-          version: '1.0',
-          repositoryUrl: '',
-          homepageUrl: '',
-          tags: '',
-          exampleUsage: '',
-        })
-        toast.success('library added successfully')
+        form.reset()
+        toast.success('Library added successfully')
+        router.push('/libraries/my-libraries')
       },
-      onError: error => {
-        console.log(error)
-        toast.error('Something went wrong')
-      },
+      onError: () => toast.error('Something went wrong'),
     })
   }
 
@@ -86,7 +144,6 @@ export default function AddNew() {
             <FormField
               control={form.control}
               name="name"
-              rules={{ required: 'Library name is required' }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Library Name *</FormLabel>
@@ -102,7 +159,6 @@ export default function AddNew() {
             <FormField
               control={form.control}
               name="description"
-              rules={{ required: 'Description is required' }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description *</FormLabel>
@@ -118,13 +174,6 @@ export default function AddNew() {
             <FormField
               control={form.control}
               name="repositoryUrl"
-              rules={{
-                required: 'Repository URL is required',
-                pattern: {
-                  value: /^https?:\/\/.+$/,
-                  message: 'Enter a valid URL',
-                },
-              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Repository URL *</FormLabel>
@@ -143,12 +192,6 @@ export default function AddNew() {
             <FormField
               control={form.control}
               name="homepageUrl"
-              rules={{
-                pattern: {
-                  value: /^https?:\/\/.+$/,
-                  message: 'Enter a valid URL',
-                },
-              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Homepage URL</FormLabel>
@@ -171,10 +214,9 @@ export default function AddNew() {
                     <Input placeholder="react, state-management" {...field} />
                   </FormControl>
                   <div className="flex flex-wrap gap-2 mt-2">
-                    {tags.map((tag, idx) => (
-                      <Badge key={idx}>{tag}</Badge>
-                    ))}
+                    {tags?.map((tag, idx) => <Badge key={idx}>{tag}</Badge>)}
                   </div>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -193,13 +235,95 @@ export default function AddNew() {
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Category */}
+            <FormField
+              control={form.control}
+              name="category"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Category *</FormLabel>
+                  <FormControl>
+                    <SingleSelect
+                      placeholder="Select a Category"
+                      selectLabel="Categories"
+                      items={categoryOptions}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="language"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Language *</FormLabel>
+                  <FormControl>
+                    <SingleSelect
+                      placeholder="Select a Language"
+                      selectLabel="Language"
+                      items={languageOptions}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="framework"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Framework</FormLabel>
+                  <FormControl>
+                    <SingleSelect
+                      placeholder="Select a Framework"
+                      selectLabel="Frameworks"
+                      items={frameworkOptions}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="libraryType"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Library Type</FormLabel>
+                  <FormControl>
+                    <SingleSelect
+                      placeholder="Select a Type"
+                      selectLabel="Types"
+                      items={libraryTypeOptions}
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
 
             <Button
               type="submit"
-              disabled={status == 'pending'}
+              disabled={status === 'pending'}
               className="w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg hover:shadow-xl transition-transform hover:scale-[1.02]"
             >
               {status === 'pending' ? 'Saving...' : 'Save'}

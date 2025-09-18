@@ -1,6 +1,6 @@
 import { queryOptions, useQuery } from '@tanstack/react-query'
 import { User } from '@/services/mutation/login' // reuse your User type
-import api from '../../../utils/axiosConfig'
+import api from '@/utils/axiosConfig'
 import { BaseResponse } from '@/types/sharedTypes'
 
 interface MeResponse extends BaseResponse {

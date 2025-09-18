@@ -1,5 +1,5 @@
 import { queryOptions, useQuery } from '@tanstack/react-query'
-import api from '../../../utils/axiosConfig'
+import api from '@/utils/axiosConfig'
 import { BaseResponse, Library } from '@/types/sharedTypes'
 
 interface PendingLibraryResponse extends BaseResponse {

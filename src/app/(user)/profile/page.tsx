@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import { PencilIcon, HeartIcon, Code } from 'lucide-react'
+import { HeartIcon, Code } from 'lucide-react'
 import { LikedLibraries } from '@/components/user/LikedLibraries'
 import MyLibraries from '@/components/user/MyLibraries'
 import { ProfileSection } from '@/components/user/ProfileSection'
@@ -68,12 +68,12 @@ const UserProfilePage = () => {
           >
             <HeartIcon className="inline w-4 h-4 mr-2" /> Liked Libraries
           </TabsTrigger>
-          <TabsTrigger
+          {/* <TabsTrigger
             value="profile"
             className="p-4 rounded-lg hover:bg-slate-200/30 dark:hover:bg-slate-700/30"
           >
             <PencilIcon className="inline w-4 h-4 mr-2" /> Profile Settings
-          </TabsTrigger>
+          </TabsTrigger> */}
         </TabsList>
 
         {/* My Libraries */}

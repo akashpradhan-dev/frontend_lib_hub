@@ -1,5 +1,5 @@
-import { QueryClient, useMutation } from '@tanstack/react-query'
-import api from '../../../utils/axiosConfig'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import api from '@/utils/axiosConfig'
 
 const logoutAction = async () => {
   const response = await api.post('/v1/auth/logout')
@@ -7,7 +7,7 @@ const logoutAction = async () => {
 }
 
 export const useLogoutMutation = () => {
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: logoutAction,
     onSuccess: () => {

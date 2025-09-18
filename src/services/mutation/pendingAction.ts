@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { BaseResponse } from '@/types/sharedTypes'
-import api from '../../../utils/axiosConfig'
+import api from '@/utils/axiosConfig'
 
 interface PendingActionRequest {
   libraryId: string

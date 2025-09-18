@@ -1,6 +1,6 @@
-import { QueryClient, useMutation } from '@tanstack/react-query'
-import api from '../../../utils/axiosConfig'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { BaseResponse, Library } from '@/types/sharedTypes'
+import api from '@/utils/axiosConfig'
 
 interface CreateLibRequest {
   name: string
@@ -10,6 +10,7 @@ interface CreateLibRequest {
   tags?: string[]
   exampleUsage?: string
   createdBy: string | undefined
+  category: string
 }
 
 interface SaveLibraryResponse extends BaseResponse {
@@ -39,7 +40,7 @@ const createLibrary = async ({
 }
 
 export const useSaveLibraryMutation = () => {
-  const queryclient = new QueryClient()
+  const queryclient = useQueryClient()
 
   return useMutation({
     mutationFn: createLibrary,

@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import api from '../../../utils/axiosConfig'
+import api from '@/utils/axiosConfig'
 import { BaseResponse } from '@/types/sharedTypes'
 
 interface SignInRequest {

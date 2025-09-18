@@ -2,15 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import {
-  ChartArea,
-  CircleUser,
-  Heart,
-  Library,
-  LogOut,
-  Moon,
-  Sun,
-} from 'lucide-react'
+import { ChartArea, CircleUser, Library, LogOut, Moon, Sun } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from './ui/button'
@@ -156,11 +148,11 @@ const UserPopover = ({ logout, user }: UserPopoverProps) => {
             </Link>
           </Button>
 
-          <Button asChild variant="ghost" size="sm" className="justify-start">
+          {/* <Button asChild variant="ghost" size="sm" className="justify-start">
             <Link href="/liked-libraries">
               <Heart className="mr-2 h-4 w-4" /> Liked Libraries
             </Link>
-          </Button>
+          </Button> */}
 
           {user?.role === 'admin' && (
             <Button asChild variant="ghost" size="sm" className="justify-start">
