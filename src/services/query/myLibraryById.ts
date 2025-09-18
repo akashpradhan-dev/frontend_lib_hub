@@ -18,7 +18,7 @@ export const useMyLibrariesByIdQueryOptions = ({
   id,
 }: MyLibrariesByIdRequest) => {
   return queryOptions({
-    queryKey: ['my-librrary', id],
+    queryKey: ['my-librrary-id', id],
     queryFn: () => fetchLibraries({ id }),
     staleTime: 1000 * 60 * 5,
     retry: 0,

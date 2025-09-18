@@ -1,14 +1,20 @@
 'use client'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Badge } from '../ui/badge'
 import { LibaryDetailsTabs } from '../LibaryDetailsTabs'
 import { useMyLibraryByIdQuery } from '@/services/query/myLibraryById'
+import { AlertModal } from '../AlertModal'
+import toast from 'react-hot-toast'
+import { usePublishMutation } from '@/services/mutation/user/publish'
 
 export const Library = ({ id }: { id: string }) => {
+  const [isOpen, setIsOpen] = useState(false)
   const { data, status, error } = useMyLibraryByIdQuery({ id })
+
+  const { mutate } = usePublishMutation()
 
   if (status === 'pending') {
     return (
@@ -71,6 +77,40 @@ export const Library = ({ id }: { id: string }) => {
         {/* Tabs Section */}
         <div className="mt-8 w-full rounded-2xl border bg-card/80 p-4 shadow-sm backdrop-blur-sm">
           <LibaryDetailsTabs library={library} />
+        </div>
+
+        <div className="mt-2 w-full">
+          <AlertModal
+            name={
+              library.status === 'pending'
+                ? 'Request for publish'
+                : library.status === 'approved'
+                  ? 'Published'
+                  : 'Publish'
+            }
+            disabled={library.status !== 'created'}
+            title="Are you absolutely sure?"
+            description="After submit admin will review and publish your library"
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            onCancel={() => {
+              setIsOpen(false)
+            }}
+            onContinue={() => {
+              mutate(
+                {
+                  libraryId: id,
+                  action: 'publish',
+                },
+                {
+                  onSuccess: () => {
+                    toast.success('Send for publish')
+                    setIsOpen(false)
+                  },
+                },
+              )
+            }}
+          />
         </div>
       </div>
     </div>

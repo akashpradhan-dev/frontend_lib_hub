@@ -9,9 +9,10 @@ import {
 } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Github, Edit, Trash2 } from 'lucide-react'
+import { Github } from 'lucide-react'
 import { useMyLibrariesQuery } from '@/services/query/myLibraries'
 import Link from 'next/link'
+import { DeleteLibrary } from './DeleteLibrary'
 
 export default function MyLibraries() {
   const { data, status, error } = useMyLibrariesQuery()
@@ -82,12 +83,10 @@ export default function MyLibraries() {
                 </Button>
 
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
+                  {/* <Button variant="outline" size="sm">
                     <Edit className="w-4 h-4 mr-1" /> Edit
-                  </Button>
-                  <Button variant="destructive" size="sm" onClick={() => {}}>
-                    <Trash2 className="w-4 h-4 mr-1" /> Delete
-                  </Button>
+                  </Button> */}
+                  <DeleteLibrary id={lib._id} />
                 </div>
               </div>
             </CardFooter>
