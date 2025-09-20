@@ -1,6 +1,6 @@
 export const PUBLIC_ROUTES = [
   '/',
-  '/libraries',
+  '/lib',
   '/login',
   '/register',
   '/oauth-success',
