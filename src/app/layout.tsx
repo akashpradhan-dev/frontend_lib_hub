@@ -17,9 +17,47 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Library Hub',
+  title: 'devvolt - Library Hub',
   description:
-    'A hub for frontend libraries and tools to enhance your development experience.',
+    'A curated collection of frontend libraries and resources to accelerate your development workflow.',
+  keywords: [
+    'frontend',
+    'libraries',
+    'developer resources',
+    'UI',
+    'components',
+    'devvolt',
+    'library hub',
+  ],
+  authors: [
+    { name: 'Devvolt Team', url: 'https://www.linkedin.com/in/akash-pradhan/' },
+  ],
+  openGraph: {
+    title: 'devvolt - Library Hub',
+    description:
+      'A curated collection of frontend libraries and resources to accelerate your development workflow.',
+    url: 'https://devvolt.vercel.app',
+    siteName: 'devvolt',
+    images: [
+      {
+        url: 'https://devvolt.vercel.app/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'devvolt Library Hub',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'devvolt - Library Hub',
+    description:
+      'A curated collection of frontend libraries and resources to accelerate your development workflow.',
+    images: ['https://devvolt.vercel.app/og-image.jpg'],
+    site: '@devvolt',
+    creator: '@devvolt',
+  },
 }
 
 export default function RootLayout({
