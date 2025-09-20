@@ -19,7 +19,7 @@ export const useDeleteMutation = () => {
     mutationFn: DeleteAction,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['my-librrary'],
+        queryKey: ['my-libraries'],
       })
     },
   })

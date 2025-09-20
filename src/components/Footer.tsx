@@ -3,7 +3,7 @@ import React from 'react'
 
 export const Footer = () => {
   return (
-    <footer className="border-t border-slate-200 dark:border-slate-800 py-12 px-4 sm:px-6 lg:px-8">
+    <footer className="border-t border-slate-200 dark:border-slate-800 py-6 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Logo + Name */}
@@ -12,13 +12,13 @@ export const Footer = () => {
               <Code className="w-5 h-5 text-white" />
             </div>
             <span className="text-lg font-semibold text-slate-800 dark:text-slate-200">
-              FrontendLib
+              DevVault
             </span>
           </div>
 
           {/* Copyright */}
           <div className="text-slate-600 dark:text-slate-400 text-center md:text-right">
-            <p>&copy; 2025 FrontendLib. Crafted with ❤️ for developers.</p>
+            <p>&copy; 2025 DevVault. Crafted with ❤️ for developers.</p>
           </div>
         </div>
       </div>

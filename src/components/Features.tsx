@@ -6,19 +6,19 @@ const features = [
     icon: Code,
     title: 'Developer Friendly',
     description:
-      'Clean APIs and comprehensive documentation for rapid development.',
+      'Intuitive APIs and clear documentation to help developers save, share, and use packages effortlessly.',
   },
   {
     icon: Zap,
     title: 'Performance First',
     description:
-      "Optimized libraries that don't compromise on speed or bundle size.",
+      'High-quality packages optimized for speed and reliability across frontend, backend, and more.',
   },
   {
     icon: Layers,
-    title: 'Modern Stack',
+    title: 'Modern & Versatile',
     description:
-      'Built with TypeScript, React 18+, and the latest web standards.',
+      'Supports the latest technologies and frameworks, making it easy to integrate into any project.',
   },
 ]
 
@@ -26,9 +26,16 @@ export const Features = () => {
   return (
     <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl text-center">
-        <h2 className="mb-16 bg-gradient-to-r from-primary via-purple-400 to-pink-400 bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl">
-          Why Choose Our Collection?
-        </h2>
+        <div className="max-w-4xl mx-auto text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            Why Choose DevVault?
+          </h2>
+          <p className="text-lg text-slate-600 dark:text-slate-400">
+            DevVault is your all-in-one hub to save, share, and discover
+            libraries and packages. Built for developers, by developers, it
+            ensures high-quality, modern, and versatile tools for every project.
+          </p>
+        </div>
 
         <div className="grid gap-8 md:grid-cols-3">
           {features.map((feature, index) => {

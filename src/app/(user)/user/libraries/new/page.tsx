@@ -125,9 +125,16 @@ export default function AddNew() {
       onSuccess: () => {
         form.reset()
         toast.success('Library added successfully')
-        router.push('/libraries/my-libraries')
+        router.push('/user/libraries/my-libraries')
       },
-      onError: () => toast.error('Something went wrong'),
+      onError: error => {
+        const message =
+          error?.response?.data?.message ||
+          error?.message ||
+          'Something went wrong. Please try again.'
+        toast.error(message)
+        console.log(error)
+      },
     })
   }
 

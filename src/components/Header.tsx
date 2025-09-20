@@ -10,7 +10,6 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { User } from '@/services/mutation/login'
 import { useLogoutMutation } from '@/services/mutation/logout'
 import { useRouter } from 'next/navigation'
-import { useMeQuery } from '@/services/query/useMeQuery'
 import { useProtectedRoute } from '@/hooks/useProtectedRoute'
 
 export function Header() {
@@ -18,9 +17,7 @@ export function Header() {
   const { logout, user } = useAuth()
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
-  console.log(user)
 
-  // Ensure hydration consistenc\
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -44,7 +41,7 @@ export function Header() {
           href="/"
           className="text-xl font-bold tracking-tight bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
         >
-          LibraryHub
+          DevVault
         </Link>
 
         <div className="flex items-center gap-4">
@@ -94,16 +91,7 @@ interface UserPopoverProps {
 
 const UserPopover = ({ logout, user }: UserPopoverProps) => {
   const { mutate } = useLogoutMutation()
-  const { data, status } = useMeQuery()
-  const { setProfile } = useAuth()
   const router = useRouter()
-
-  // Update profile only once when query succeeds
-  useEffect(() => {
-    if (status === 'success' && data?.data) {
-      setProfile(data.data)
-    }
-  }, [status, data, setProfile])
 
   const handleLogout = () => {
     mutate(undefined, {
@@ -121,29 +109,26 @@ const UserPopover = ({ logout, user }: UserPopoverProps) => {
         <div className="flex items-center space-x-3 cursor-pointer group">
           {/* User Avatar */}
           <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white text-sm font-semibold shadow-md transition-transform duration-200 group-hover:scale-105">
-            {data?.data.name.slice(0, 2)}
+            {user?.name.slice(0, 2)}
           </div>
 
           {/* Username */}
           <span className="text-white font-medium text-sm md:text-base transition-colors duration-200 group-hover:text-gray-300">
-            {data?.data.name}
+            {user?.name}
           </span>
-
-          {/* Optional Icon */}
-          {/* <CircleUser className="w-6 h-6 text-gray-400 transition-colors duration-200 group-hover:text-gray-200" /> */}
         </div>
       </PopoverTrigger>
 
       <PopoverContent>
         <div className="p-2 flex flex-col space-y-1">
           <Button asChild variant="ghost" size="sm" className="justify-start">
-            <Link href="/profile">
-              <CircleUser className="mr-2 h-4 w-4" /> Profile
+            <Link href="/user/profile">
+              <CircleUser className="mr-2 h-4 w-4" /> My Libraries
             </Link>
           </Button>
 
           <Button asChild variant="ghost" size="sm" className="justify-start">
-            <Link href="/libraries/my-libraries">
+            <Link href="/user/libraries/my-libraries">
               <Library className="mr-2 h-4 w-4" /> My Libraries
             </Link>
           </Button>
@@ -156,7 +141,7 @@ const UserPopover = ({ logout, user }: UserPopoverProps) => {
 
           {user?.role === 'admin' && (
             <Button asChild variant="ghost" size="sm" className="justify-start">
-              <Link href="/dashboard">
+              <Link href="/admin/dashboard">
                 <ChartArea className="mr-2 h-4 w-4" /> Dashboard
               </Link>
             </Button>

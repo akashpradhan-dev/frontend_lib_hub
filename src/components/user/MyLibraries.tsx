@@ -38,12 +38,20 @@ export default function MyLibraries() {
   return (
     <div className="w-full">
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {libraries.length === 0 && (
+          <div className="col-span-full text-center text-slate-500 dark:text-slate-400">
+            You have not added any libraries yet.
+          </div>
+        )}
         {libraries.map(lib => (
           <Card
             key={lib._id}
             className="h-full flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow"
           >
-            <Link key={lib._id} href={`/libraries/my-libraries/${lib._id}`}>
+            <Link
+              key={lib._id}
+              href={`/user/libraries/my-libraries/${lib._id}`}
+            >
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span className="text-lg font-semibold">

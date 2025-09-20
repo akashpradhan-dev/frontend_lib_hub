@@ -9,7 +9,9 @@ import { useEffect } from 'react'
 export default function OAuthSuccessPage() {
   const router = useRouter()
   const { login } = useAuth()
-  const { data, status } = useMeQuery()
+  const { data, status } = useMeQuery({
+    enabled: true,
+  })
 
   const renderContent = () => {
     if (status === 'pending') {
@@ -35,6 +37,7 @@ export default function OAuthSuccessPage() {
     if (status === 'success' && data?.status === 'success') {
       const user = data.data
       login(user)
+
       toast.success('Google login successful!', { id: 'login_success' })
       router.replace(user.role === 'admin' ? '/dashboard' : '/profile')
     } else if (status === 'error') {

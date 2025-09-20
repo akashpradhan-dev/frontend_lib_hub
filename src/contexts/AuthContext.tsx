@@ -1,12 +1,15 @@
 import {
   createContext,
   useContext,
+  ReactNode,
   useEffect,
   useState,
-  ReactNode,
 } from 'react'
 import { User } from '../services/mutation/login'
 import { useMeQuery } from '@/services/query/useMeQuery'
+import { useQueryClient } from '@tanstack/react-query'
+import { PUBLIC_ROUTES } from '@/constants/constant'
+import { usePathname } from 'next/navigation'
 
 interface AuthContextType {
   user: User | null
@@ -14,32 +17,49 @@ interface AuthContextType {
   logout: () => void
   isLoggedIn: boolean
   setProfile: (user: User) => void
-  isAuthResolved: boolean
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null)
-  const [isAuthResolved, setAuthResolved] = useState(false)
+  const pathname = usePathname()
 
-  const { data, status } = useMeQuery()
+  const isPublicRoute = PUBLIC_ROUTES.some(route => {
+    if (route === '/') return pathname === '/'
+    return pathname.startsWith(route)
+  })
+
+  const { data } = useMeQuery({ enabled: !isPublicRoute })
+  const queryClient = useQueryClient()
+  const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
-    if (status === 'success' && data?.data) {
+    if (data?.data) {
       setUser(data.data)
-    }
-    if (status === 'error') {
+    } else {
       setUser(null)
     }
-    if (status !== 'pending') {
-      setAuthResolved(true)
-    }
-  }, [status, data])
+  }, [data])
 
-  const login = (userData: User) => setUser(userData)
-  const logout = () => setUser(null)
-  const setProfile = (user: User) => setUser(user)
+  const login = (userData: User) => {
+    setUser(userData)
+    queryClient.invalidateQueries({
+      queryKey: ['me'],
+    })
+  }
+
+  const logout = () => {
+    queryClient.invalidateQueries({
+      queryKey: ['me'],
+    })
+  }
+
+  const setProfile = (user: User) => {
+    setUser(user)
+    queryClient.invalidateQueries({
+      queryKey: ['me'],
+    })
+  }
 
   return (
     <AuthContext.Provider
@@ -49,7 +69,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         logout,
         setProfile,
         isLoggedIn: !!user,
-        isAuthResolved,
       }}
     >
       {children}

@@ -18,11 +18,12 @@ const Libraries = () => {
       <section className="relative px-4 pt-20 md:pt-32 lg:px-8">
         <div className="mx-auto max-w-7xl text-center">
           <h1 className="mb-6 bg-gradient-to-r from-primary via-purple-400 to-pink-400 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent sm:text-6xl lg:text-7xl">
-            Libraries for Modern Development
+            Explore Modern Development Libraries
           </h1>
           <p className="mx-auto mb-12 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            Discover modern React tools that simplify, enhance, and inspire your
-            frontend projects.
+            Browse curated React, frontend, and backend libraries designed to
+            simplify your workflow, boost productivity, and inspire your next
+            project.
           </p>
         </div>
       </section>

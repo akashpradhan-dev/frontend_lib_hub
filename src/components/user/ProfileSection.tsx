@@ -23,7 +23,7 @@ export const ProfileSection = () => {
         )} */}
       </div>
       <Button asChild>
-        <Link href="/libraries/new">
+        <Link href="/user/libraries/new">
           <PlusIcon className="size-5" />
           Add New
         </Link>

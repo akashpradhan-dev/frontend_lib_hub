@@ -12,18 +12,19 @@ export default function Home() {
           {/* Headline */}
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-8 leading-tight">
             {/* In light mode: darker gradient, in dark mode: lighter gradient */}
-            <span className="block bg-gradient-to-r from-slate-900 via-purple-700 to-pink-700 dark:from-white dark:via-purple-200 dark:to-pink-200 bg-clip-text text-transparent">
-              Frontend Libraries
+            <span className="block  tracking-tight bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+              DevVault
             </span>
-            <span className="block bg-gradient-to-r from-purple-600 via-pink-600 to-red-600 dark:from-purple-400 dark:via-pink-400 dark:to-red-400 bg-clip-text text-transparent">
-              Reimagined
+            <span className="block bg-gradient-to-r from-slate-900 via-purple-700 to-pink-700 dark:from-white dark:via-purple-400 dark:to-pink-300 bg-clip-text text-transparent">
+              Store & Share Any Package
             </span>
           </h1>
 
           {/* Subheading */}
           <p className="text-lg sm:text-xl lg:text-2xl text-slate-600 dark:text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Discover the most powerful, modern frontend libraries curated for
-            developers who build exceptional web experiences.
+            Discover the most powerful, modern libraries and packages curated
+            for developers who build exceptional applications, across frontend,
+            backend, and more.
           </p>
 
           {/* CTA Buttons */}
@@ -32,7 +33,7 @@ export default function Home() {
               href="/lib"
               className="group bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-500 dark:to-pink-500 px-8 py-4 rounded-full text-lg font-semibold shadow-lg shadow-purple-500/20 hover:shadow-xl hover:shadow-pink-500/30 transition-all duration-300 transform hover:scale-105 flex items-center gap-2 text-white"
             >
-              Explore Libraries
+              Explore Packages
               <ArrowRight
                 className="w-5 h-5 group-hover:translate-x-1 transition-transform"
                 aria-hidden="true"
@@ -40,10 +41,10 @@ export default function Home() {
             </Link>
 
             <Link
-              href="/submit"
+              href="/user/libraries/new"
               className="px-8 py-4 rounded-full border border-slate-300 dark:border-slate-700 text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-white hover:border-purple-500 hover:bg-purple-500/10 transition-all duration-300"
             >
-              Submit a Library
+              Submit a Package
             </Link>
           </div>
 
@@ -51,8 +52,8 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
             {[
               { number: '50+', label: 'Libraries' },
-              { number: '20K+', label: 'Monthly Visitors' },
-              { number: '10K+', label: 'Active Developers' },
+              { number: '200', label: 'Monthly Visitors' },
+              { number: '10', label: 'Active Developers' },
               { number: '99%', label: 'Uptime' },
             ].map((stat, index) => (
               <div

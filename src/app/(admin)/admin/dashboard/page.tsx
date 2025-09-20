@@ -63,7 +63,7 @@ const Dashboard = () => {
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
-          <Link href="/libraries/list/pending">
+          <Link href="/admin/libraries/list/pending">
             <Card>
               <CardHeader>
                 <CardTitle>Pending Library</CardTitle>

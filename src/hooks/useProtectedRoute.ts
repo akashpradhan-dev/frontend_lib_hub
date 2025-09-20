@@ -5,14 +5,14 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 
 export function useProtectedRoute() {
-  const { isLoggedIn, isAuthResolved } = useAuth()
+  const { isLoggedIn } = useAuth()
   const router = useRouter()
 
   useEffect(() => {
-    if (isAuthResolved && !isLoggedIn) {
-      router.replace('/login')
+    if (!isLoggedIn) {
+      // router.replace('/login')
     }
-  }, [isAuthResolved, isLoggedIn, router])
+  }, [isLoggedIn, router])
 
-  return { isLoggedIn, isAuthResolved }
+  return { isLoggedIn }
 }

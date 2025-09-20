@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Github } from 'lucide-react'
 import { useLikedLibrariesQuery } from '@/services/query/likedLibraries'
 import LikeButton from '../LikeButton'
+import Link from 'next/link'
 
 export const LikedLibraries = () => {
   const { data, status, error } = useLikedLibrariesQuery()
@@ -65,20 +66,21 @@ export const LikedLibraries = () => {
               <LikeButton libraryId={lib._id} liked={lib?.liked} />
             </CardAction>
           </CardHeader>
+          <Link href={`/lib/${lib._id}`}>
+            <CardContent className="flex flex-col justify-between flex-1 space-y-4">
+              <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-3">
+                {lib.description}
+              </p>
 
-          <CardContent className="flex flex-col justify-between flex-1 space-y-4">
-            <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-3">
-              {lib.description}
-            </p>
-
-            <div className="flex flex-wrap gap-2">
-              {lib.tags.map(tag => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          </CardContent>
+              <div className="flex flex-wrap gap-2">
+                {lib.tags.map(tag => (
+                  <Badge key={tag} variant="secondary">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Link>
         </Card>
       ))}
     </div>

@@ -15,15 +15,16 @@ const fetchMe = async () => {
   return response.data
 }
 
-export const useMeQueryOptions = () => {
+export const useMeQueryOptions = ({ enabled }: { enabled?: boolean }) => {
   return queryOptions({
     queryKey: ['me'],
     queryFn: () => fetchMe(),
     staleTime: 1000 * 60 * 5,
     retry: 0,
+    enabled,
   })
 }
 
-export const useMeQuery = () => {
-  return useQuery(useMeQueryOptions())
+export const useMeQuery = ({ enabled }: { enabled: boolean }) => {
+  return useQuery(useMeQueryOptions({ enabled }))
 }
