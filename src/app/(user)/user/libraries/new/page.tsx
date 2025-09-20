@@ -23,7 +23,7 @@ import toast from 'react-hot-toast'
 import { SingleSelect } from '@/components/SingleSelect'
 import { useRouter } from 'next/navigation'
 
-export const categoryOptions = [
+const categoryOptions = [
   { key: 'FrontEnd', name: 'Frontend' },
   { key: 'Backend', name: 'Backend' },
   { key: 'Mobile', name: 'Mobile' },
