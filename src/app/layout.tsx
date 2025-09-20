@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'devvolt - Library Hub',
+  title: 'Dev Volt - Library Hub',
   description:
     'A curated collection of frontend libraries and resources to accelerate your development workflow.',
   keywords: [
