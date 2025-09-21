@@ -1,17 +1,13 @@
+'use client'
 import { useMutation } from '@tanstack/react-query'
 import api from '@/utils/axiosConfig'
 import { BaseResponse } from '@/types/sharedTypes'
+import { User } from './login'
 
-interface SignInRequest {
+interface SignUpRequest {
+  name: string
   email: string
   password: string
-}
-
-export interface User {
-  _id?: string
-  email: string
-  name: string
-  role: 'admin' | 'user'
 }
 
 interface WithToken extends User {
@@ -22,15 +18,16 @@ interface SignInResponse extends BaseResponse {
   data: WithToken
 }
 
-const signInAction = async ({ email, password }: SignInRequest) => {
-  const response = await api.post<SignInResponse>('/v1/auth/login', {
+const signUpAction = async ({ name, email, password }: SignUpRequest) => {
+  const response = await api.post<SignInResponse>('/v1/auth/register', {
+    name,
     email,
     password,
   })
   return response.data
 }
 
-export const useLogInMutation = () =>
+export const useSignUpMutation = () =>
   useMutation({
-    mutationFn: signInAction,
+    mutationFn: signUpAction,
   })

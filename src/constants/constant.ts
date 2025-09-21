@@ -2,6 +2,7 @@ export const PUBLIC_ROUTES = [
   '/',
   '/lib',
   '/login',
+  '/signup',
   '/register',
   '/oauth-success',
 ]

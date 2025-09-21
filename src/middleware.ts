@@ -1,4 +1,3 @@
-import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { PUBLIC_ROUTES } from './constants/constant'
@@ -15,7 +14,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
-  const token = (await cookies()).get('token')?.value
+  const token = request.cookies.get('token')?.value
 
   if (!token) {
     const loginUrl = new URL('/login', request.url)
