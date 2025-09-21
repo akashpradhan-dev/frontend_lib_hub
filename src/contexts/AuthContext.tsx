@@ -29,9 +29,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return pathname.startsWith(route)
   })
 
-  const { data } = useMeQuery({ enabled: !isPublicRoute })
   const queryClient = useQueryClient()
   const [user, setUser] = useState<User | null>(null)
+  const { data } = useMeQuery({ enabled: !isPublicRoute && user === null })
 
   useEffect(() => {
     if (data?.data) {
