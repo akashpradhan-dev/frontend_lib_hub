@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     queryClient.invalidateQueries({
       queryKey: ['me'],
     })
+    setUser(null)
   }
 
   const setProfile = (user: User) => {
