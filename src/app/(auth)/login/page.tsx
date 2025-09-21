@@ -12,7 +12,7 @@ import {
 
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import toast from 'react-hot-toast'
@@ -81,7 +81,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-8 shadow-xl border border-slate-200 dark:border-slate-800">
         {/* Title */}
         <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-          Login to LibraryHub
+          Login to DevVolt
         </h2>
 
         {/* Form */}
@@ -149,7 +149,7 @@ export default function LoginPage() {
         </button>
 
         {/* Extra links */}
-        <div className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
+        {/* <div className="mt-6 text-center text-sm text-slate-600 dark:text-slate-400">
           Don’t have an account?{' '}
           <Link
             href="/register"
@@ -157,7 +157,7 @@ export default function LoginPage() {
           >
             Sign up
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   )
