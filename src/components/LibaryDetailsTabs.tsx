@@ -1,84 +1,106 @@
 import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs'
-import { ExternalLink } from 'lucide-react'
-import { LibraryCardProps } from '@/types/sharedTypes'
 import { SyntaxHighlight } from './SyntaxHighlight'
+import { Library } from '@/types/sharedTypes'
 
-export const LibaryDetailsTabs = ({ library }: LibraryCardProps) => {
+interface LibaryDetailsTabsProps {
+  library: Library
+}
+
+export const LibaryDetailsTabs = ({ library }: LibaryDetailsTabsProps) => {
   return (
-    <>
-      <Tabs defaultValue="overview">
-        <TabsList className="bg-transparent backdrop-blur-sm border-slate-700/50 h-12">
-          <TabsTrigger value="overview" className="text-md cursor-pointer">
-            Overview
-          </TabsTrigger>
-          <TabsTrigger value="instalation" className="text-md cursor-pointer">
-            Instalation
-          </TabsTrigger>
-          <TabsTrigger value="usage" className="text-md cursor-pointer">
-            Usage
-          </TabsTrigger>
-          <TabsTrigger value="resources" className="text-md cursor-pointer">
-            Resources
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent
+    <Tabs defaultValue="overview" className="w-full">
+      {/* Tab Header */}
+      <TabsList className="flex h-12 w-full justify-start gap-2 rounded-xl border bg-muted/50 p-1 backdrop-blur-sm">
+        <TabsTrigger
           value="overview"
-          className="p-6 bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl"
+          className="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all data-[state=active]:bg-background data-[state=active]:shadow-sm"
         >
-          <h3 className={`text-xl font-semibold mb-4 `}>
-            About {library?.name}
-          </h3>
-          <p className={`text-lg mb-6 text-gray-300`}>{library?.overview}</p>
-          <h4 className={`text-lg font-semibold mb-3 `}>Key Features</h4>
-          <ul className="space-y-2">
-            {library?.features.map((feature: string, index: number) => (
-              <li
-                key={index}
-                className={`flex items-center gap-2 text-gray-300`}
-              >
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                {feature}
-              </li>
-            ))}
-          </ul>
-        </TabsContent>
-        <TabsContent
-          value="instalation"
-          className="p-6 bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl"
+          Overview
+        </TabsTrigger>
+        <TabsTrigger
+          value="installation"
+          className="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all data-[state=active]:bg-background data-[state=active]:shadow-sm"
         >
-          <SyntaxHighlight codeBlock={library?.installation} />
-        </TabsContent>
-        <TabsContent
-          value="usage"
-          className="p-6 bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl"
-        >
-          <h3 className={`text-xl font-semibold mb-4 `}>Usage Example</h3>
-          <div>
-            <SyntaxHighlight codeBlock={library?.usage} />
-          </div>
-        </TabsContent>
-        <TabsContent
+          Usage
+        </TabsTrigger>
+        <TabsTrigger
           value="resources"
-          className="p-6 bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-2xl"
+          className="flex-1 rounded-lg px-4 py-2 text-sm font-medium transition-all data-[state=active]:bg-background data-[state=active]:shadow-sm"
         >
-          <h3 className={`text-xl font-semibold mb-4 `}>Resources</h3>
-          <ul className="space-y-2">
-            {library?.resources.map((resource, index) => (
+          Resources
+        </TabsTrigger>
+      </TabsList>
+
+      {/* Overview Tab */}
+      <TabsContent
+        value="overview"
+        className="mt-6 rounded-xl border bg-card/80 p-6 shadow-sm backdrop-blur-sm"
+      >
+        <h3 className="mb-4 text-xl font-semibold">About {library?.name}</h3>
+        <p className="mb-6 text-base leading-relaxed text-muted-foreground">
+          {library?.description}
+        </p>
+
+        <h4 className="mb-3 text-lg font-semibold">Key Features</h4>
+        {library?.exampleUsage ? (
+          <SyntaxHighlight codeBlock={library.exampleUsage} />
+        ) : (
+          <p className="text-sm text-muted-foreground">No example provided.</p>
+        )}
+      </TabsContent>
+
+      {/* Installation Tab */}
+      <TabsContent
+        value="installation"
+        className="mt-6 rounded-xl border bg-card/80 p-6 shadow-sm backdrop-blur-sm"
+      >
+        {library?.exampleUsage ? (
+          <SyntaxHighlight codeBlock={library.exampleUsage} />
+        ) : (
+          <p className="text-sm text-muted-foreground">No example provided.</p>
+        )}
+      </TabsContent>
+
+      {/* Resources Tab */}
+      <TabsContent
+        value="resources"
+        className="mt-6 rounded-xl border bg-card/80 p-6 shadow-sm backdrop-blur-sm"
+      >
+        <div className="flex flex-col gap-4">
+          {/* Homepage */}
+          {library?.homepageUrl && (
+            <div>
+              <span className="block text-sm font-semibold text-foreground">
+                Homepage
+              </span>
               <a
-                key={index}
-                href={resource?.url}
+                href={library.homepageUrl}
                 target="_blank"
-                rel="noopener noreferrer"
-                className={`flex items-center gap-3 p-4 rounded-lg border transition-colors border-gray-700 hover:border-gray-600 hover:bg-gray-700`}
+                className="mt-1 inline-block truncate rounded-md bg-muted px-3 py-1 text-sm text-blue-500 hover:underline"
               >
-                <ExternalLink className="w-5 h-5 text-blue-500" />
-                <span>{resource?.name}</span>
+                {library.homepageUrl}
               </a>
-            ))}
-          </ul>
-        </TabsContent>
-      </Tabs>
-    </>
+            </div>
+          )}
+
+          {/* Repository */}
+          {library?.repositoryUrl && (
+            <div>
+              <span className="block text-sm font-semibold text-foreground">
+                Repository
+              </span>
+              <a
+                href={library.repositoryUrl}
+                target="_blank"
+                className="mt-1 inline-block truncate rounded-md bg-muted px-3 py-1 text-sm text-blue-500 hover:underline"
+              >
+                {library.repositoryUrl}
+              </a>
+            </div>
+          )}
+        </div>
+      </TabsContent>
+    </Tabs>
   )
 }
