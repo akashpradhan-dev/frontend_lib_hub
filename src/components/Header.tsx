@@ -123,7 +123,7 @@ const UserPopover = ({ logout, user }: UserPopoverProps) => {
         <div className="p-2 flex flex-col space-y-1">
           <Button asChild variant="ghost" size="sm" className="justify-start">
             <Link href="/user/profile">
-              <CircleUser className="mr-2 h-4 w-4" /> My Libraries
+              <CircleUser className="mr-2 h-4 w-4" /> My Profile
             </Link>
           </Button>
 

@@ -39,7 +39,9 @@ export default function OAuthSuccessPage() {
       login(user)
 
       toast.success('Google login successful!', { id: 'login_success' })
-      router.replace(user.role === 'admin' ? '/dashboard' : '/profile')
+      router.replace(
+        user.role === 'admin' ? '/admin/dashboard' : '/user/profile',
+      )
     } else if (status === 'error') {
       toast.error('Google login failed. Redirecting to login.')
       router.replace('/login')
