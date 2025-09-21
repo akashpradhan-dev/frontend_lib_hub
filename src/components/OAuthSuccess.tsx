@@ -1,17 +1,31 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import toast from 'react-hot-toast'
 import { useMeQuery } from '@/services/query/useMeQuery'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 
 export default function OAuthSuccessPage() {
   const router = useRouter()
   const { login } = useAuth()
-  const param = useSearchParams()
-  const token = param.get('token')
+  const [token, setToken] = useState<string | null>(null)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const t = params.get('token')
+    if (!t) {
+      toast.error('No token found. Redirecting...')
+      router.replace('/login')
+      return
+    }
+
+    setToken(t)
+  }, [router])
+
+  //   const param = useSearchParams()
+  //   const token = param.get('token')
 
   // Store token immediately so TanStack Query can use it
   if (token) {
