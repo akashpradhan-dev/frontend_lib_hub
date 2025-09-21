@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 export default function OAuthSuccessPage() {
   const router = useRouter()
   const { login } = useAuth()
-  const { data, status } = useMeQuery({
+  const { data, status, error } = useMeQuery({
     enabled: true,
   })
 
@@ -44,6 +44,11 @@ export default function OAuthSuccessPage() {
       )
     } else if (status === 'error') {
       toast.error('Google login failed. Redirecting to login.')
+      console.log(
+        'OAuth login failed, redirecting to login page.',
+        error.message,
+      )
+
       router.replace('/login')
     }
   }, [status, data, login, router])
