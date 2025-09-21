@@ -19,8 +19,8 @@ import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { useSignUpMutation } from '@/services/mutation/signup'
+import Cookie from 'js-cookie'
 
-/* ---------- Validation Schema ---------- */
 const signupSchema = z
   .object({
     name: z.string().min(2, { message: 'Name is required' }),
@@ -58,7 +58,11 @@ export default function SignupPage() {
       { name: data.name, email: data.email, password: data.password },
       {
         onSuccess: response => {
-          login(response.data)
+          const { token, ...user } = response.data
+          login(user)
+
+          Cookie.set('token', token, { expires: 7 })
+
           toast.success('Signup successful 🎉')
           router.push('/user/profile')
         },

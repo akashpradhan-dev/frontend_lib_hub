@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 export default function OAuthSuccessPage() {
   const router = useRouter()
   const { login } = useAuth()
+
   const { data, status, error } = useMeQuery({
     enabled: true,
   })

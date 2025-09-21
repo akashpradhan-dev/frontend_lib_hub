@@ -14,8 +14,12 @@ export interface User {
   role: 'admin' | 'user'
 }
 
+interface WithToken extends User {
+  token: string
+}
+
 interface SignInResponse extends BaseResponse {
-  data: User
+  data: WithToken
 }
 
 const signInAction = async ({ email, password }: SignInRequest) => {

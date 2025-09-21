@@ -21,7 +21,8 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { useLogInMutation } from '@/services/mutation/login'
 import Link from 'next/link'
-
+import { setLocalStorage } from '@/utils/localStore'
+import Cookie from 'js-cookie'
 /* ---------- Validation Schema ---------- */
 const loginSchema = z.object({
   email: z
@@ -53,15 +54,18 @@ export default function LoginPage() {
       { email: data.email, password: data.password },
       {
         onSuccess: response => {
-          const { role } = response.data
+          const { role, token } = response.data
+
+          setLocalStorage('token', token)
+          Cookie.set('token', token, { expires: 7 })
+
+          login(response.data)
 
           if (role === 'admin') {
             router.replace('/admin/dashboard')
           } else {
             router.push('/user/profile')
           }
-
-          login(response.data)
 
           toast.success('login success')
         },

@@ -10,7 +10,7 @@ import { useMeQuery } from '@/services/query/useMeQuery'
 import { useQueryClient } from '@tanstack/react-query'
 import { PUBLIC_ROUTES } from '@/constants/constant'
 import { usePathname } from 'next/navigation'
-
+import Cookie from 'js-cookie'
 interface AuthContextType {
   user: User | null
   login: (userData: User) => void
@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       queryKey: ['me'],
     })
     setUser(null)
+    Cookie.remove('token')
   }
 
   const setProfile = (user: User) => {

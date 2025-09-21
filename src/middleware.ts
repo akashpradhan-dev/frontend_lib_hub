@@ -15,7 +15,6 @@ export async function middleware(request: NextRequest) {
   }
 
   const token = request.cookies.get('token')?.value
-  console.log('Middleware cookies:', request.cookies.getAll()) // ✅ debug
 
   if (!token) {
     const loginUrl = new URL('/login', request.url)

@@ -10,8 +10,12 @@ interface SignUpRequest {
   password: string
 }
 
+interface WithToken extends User {
+  token: string
+}
+
 interface SignInResponse extends BaseResponse {
-  data: User
+  data: WithToken
 }
 
 const signUpAction = async ({ name, email, password }: SignUpRequest) => {
