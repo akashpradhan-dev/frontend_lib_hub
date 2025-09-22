@@ -42,7 +42,6 @@ export const LibaryDetailsTabs = ({ library }: LibaryDetailsTabsProps) => {
           {library?.description}
         </p>
 
-        <h4 className="mb-3 text-lg font-semibold">Key Features</h4>
         {library?.exampleUsage ? (
           <SyntaxHighlight codeBlock={library.exampleUsage} />
         ) : (
@@ -55,6 +54,7 @@ export const LibaryDetailsTabs = ({ library }: LibaryDetailsTabsProps) => {
         value="installation"
         className="mt-6 rounded-xl border bg-card/80 p-6 shadow-sm backdrop-blur-sm"
       >
+        <h1 className="text-xl font-semibold">Example</h1>
         {library?.exampleUsage ? (
           <SyntaxHighlight codeBlock={library.exampleUsage} />
         ) : (

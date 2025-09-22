@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { useSaveLibraryMutation } from '@/services/mutation/addNewLibrary'
+import { useSaveLibraryMutation } from '@/services/mutation/user/addNewLibrary'
 import { useAuth } from '@/contexts/AuthContext'
 import toast from 'react-hot-toast'
 import { SingleSelect } from '@/components/SingleSelect'
@@ -28,6 +28,8 @@ import {
   languageOptions,
   libraryTypeOptions,
 } from '@/constants/constant'
+import { useGenerateExampleMutation } from '@/services/mutation/user/generateExample'
+import { Spinner } from '@/components/Spinner'
 
 /* ---------------- Schema ---------------- */
 const librarySchema = z.object({
@@ -52,6 +54,8 @@ type LibraryFormData = z.infer<typeof librarySchema>
 export default function AddNew() {
   const { user } = useAuth()
   const { mutate, status } = useSaveLibraryMutation()
+  const { mutate: generateExample, status: generateStatus } =
+    useGenerateExampleMutation()
   const router = useRouter()
   const form = useForm<LibraryFormData>({
     resolver: zodResolver(librarySchema),
@@ -92,6 +96,48 @@ export default function AddNew() {
         console.log(error)
       },
     })
+  }
+
+  const generateWithAI = async () => {
+    const name = form.getValues('name')
+    const description = form.getValues('description')
+
+    if (!name) {
+      toast.error('Please enter the library name first.')
+      return
+    }
+    if (!description) {
+      toast.error(
+        'Please enter a brief description to help AI understand the context.',
+      )
+      return
+    }
+
+    generateExample(
+      { name, description },
+      {
+        onSuccess: res => {
+          if (res.status === 'success') {
+            const data = res.data
+            if (data) {
+              try {
+                // const parsed =
+                //   typeof data === 'string' ? JSON.parse(data) : data
+                if (data) {
+                  form.setValue('exampleUsage', data)
+                }
+                toast.success('AI-generated content added!')
+              } catch (e) {
+                console.error('Failed to parse AI response:', e)
+                toast.error('Failed to parse AI response. Please try again.')
+              }
+            } else {
+              toast.error('AI response is empty. Please try again.')
+            }
+          }
+        },
+      },
+    )
   }
 
   return (
@@ -190,12 +236,30 @@ export default function AddNew() {
               name="exampleUsage"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Example Usage</FormLabel>
+                  <div className="flex items-center justify-between mb-1">
+                    <FormLabel>Example Usage</FormLabel>
+                    <Button
+                      disabled={
+                        generateStatus === 'pending' ||
+                        form.watch('name').trim() === '' ||
+                        form.watch('description').trim() === ''
+                      }
+                      variant="outline"
+                      type="button"
+                      onClick={generateWithAI}
+                    >
+                      Generate with AI
+                      {generateStatus === 'pending' && (
+                        <Spinner className="size-4" />
+                      )}
+                    </Button>
+                  </div>
                   <FormControl>
                     <Textarea
                       placeholder={`import { Something } from 'library-name'\n\nfunction App() {\n  return <Something />\n}`}
                       rows={4}
                       {...field}
+                      disabled={generateStatus === 'pending'}
                     />
                   </FormControl>
                   <FormMessage />

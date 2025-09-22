@@ -1,17 +1,9 @@
 import React from 'react'
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from './ui/card'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { Button } from './ui/button'
 import Link from 'next/link'
 import { Badge } from './ui/badge'
 import { Library } from '@/types/sharedTypes'
-import LikeButton from './LikeButton'
 
 interface LibraryCardProps {
   library: Library
@@ -20,18 +12,14 @@ interface LibraryCardProps {
 export const LibraryCard = ({ library }: LibraryCardProps) => {
   return (
     <div className="block h-full no-underline transition-transform duration-300 hover:scale-[1.03]">
-      <Card className="flex h-full flex-col justify-between rounded-2xl border bg-card/80 p-6 shadow-sm backdrop-blur-sm transition-all hover:shadow-lg hover:shadow-primary/10">
-        {/* Header */}
-        <CardHeader className="flex flex-row items-start justify-between p-0">
-          <CardTitle className="text-xl font-semibold capitalize tracking-tight">
-            {library.name}
-          </CardTitle>
-
-          <CardAction>
-            <LikeButton libraryId={library._id} liked={library?.liked} />
-          </CardAction>
-        </CardHeader>
-        <Link href={`/lib/${library._id}`}>
+      <Link href={`/lib/${library._id}`}>
+        <Card className="flex h-full flex-col justify-between rounded-2xl border bg-card/80 p-6 shadow-sm backdrop-blur-sm transition-all hover:shadow-lg hover:shadow-primary/10">
+          {/* Header */}
+          <CardHeader className="flex flex-row items-start justify-between p-0">
+            <CardTitle className="text-xl font-semibold capitalize tracking-tight">
+              {library.name}
+            </CardTitle>
+          </CardHeader>
           {/* Content */}
           <CardContent className="mt-4 flex-1 space-y-4 p-0">
             <p className="line-clamp-3 text-sm leading-relaxed text-muted-foreground">
@@ -62,8 +50,8 @@ export const LibraryCard = ({ library }: LibraryCardProps) => {
               View Details
             </Button>
           </CardFooter>
-        </Link>
-      </Card>
+        </Card>
+      </Link>
     </div>
   )
 }

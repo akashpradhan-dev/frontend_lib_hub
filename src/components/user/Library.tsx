@@ -1,6 +1,5 @@
 'use client'
 import { ChevronLeft } from 'lucide-react'
-import Link from 'next/link'
 import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Badge } from '../ui/badge'
@@ -9,11 +8,13 @@ import { useMyLibraryByIdQuery } from '@/services/query/myLibraryById'
 import { AlertModal } from '../AlertModal'
 import toast from 'react-hot-toast'
 import { usePublishMutation } from '@/services/mutation/user/publish'
+import { Button } from '../ui/button'
+import { useRouter } from 'next/navigation'
 
 export const Library = ({ id }: { id: string }) => {
   const [isOpen, setIsOpen] = useState(false)
   const { data, status, error } = useMyLibraryByIdQuery({ id })
-
+  const router = useRouter()
   const { mutate } = usePublishMutation()
 
   if (status === 'pending') {
@@ -35,13 +36,14 @@ export const Library = ({ id }: { id: string }) => {
   const library = data.data
   return (
     <div>
-      <Link
-        href="/profile"
-        className="mb-6 flex max-w-7xl items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors md:w-2/3 mx-auto"
+      <Button
+        variant="link"
+        onClick={() => router.back()}
+        className="mb-6 cursor-pointer flex max-w-7xl justify-start items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors md:w-2/3 mx-auto"
       >
         <ChevronLeft className="h-4 w-4" />
         Back to Libraries
-      </Link>
+      </Button>
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center md:w-2/3">
         {/* Card Section */}
         <Card className="group w-full rounded-2xl border gap-2 bg-card/80 px-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
