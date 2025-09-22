@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { LibaryDetailsTabs } from '@/components/LibaryDetailsTabs'
 import Link from 'next/link'
 import { BaseResponse, Library } from '@/types/sharedTypes'
+import LikeLibrary from '@/components/LikeLibrary'
 
 interface ResponseType extends BaseResponse {
   data: Library
@@ -95,6 +96,8 @@ const libraryDetails = async ({
           <div className="mt-8 w-full rounded-2xl border bg-card/80 p-4 shadow-sm backdrop-blur-sm">
             <LibaryDetailsTabs library={library} />
           </div>
+
+          <LikeLibrary libraryId={library._id} />
         </div>
       </section>
     </div>
