@@ -7,7 +7,7 @@ type CodeBlockProps = {
 
 export const SyntaxHighlight = ({
   codeBlock,
-  filename = 'example.js',
+  filename = '',
 }: CodeBlockProps) => {
   return (
     <div className="bg-[#1e1e1e] rounded-lg shadow-lg overflow-hidden font-mono text-sm my-4">
@@ -16,7 +16,7 @@ export const SyntaxHighlight = ({
         <span className="w-3 h-3 rounded-full bg-red-500"></span>
         <span className="w-3 h-3 rounded-full bg-yellow-400"></span>
         <span className="w-3 h-3 rounded-full bg-green-500"></span>
-        <span className="ml-3">{filename}</span>
+        <span className="ml-3 ">{filename}</span>
       </div>
 
       {/* Code */}
