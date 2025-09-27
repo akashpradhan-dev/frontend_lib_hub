@@ -2,15 +2,14 @@
 
 import { LibraryCard } from '@/components/LibraryCard'
 import { Button } from '@/components/ui/button'
+import { categoryOptions } from '@/constants/constant'
 import { useLibrariesQuery } from '@/services/query/libraries'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react'
 
-interface Props {
-  categories: string[]
-}
+const category = [{ name: 'All', value: 'All' }, ...categoryOptions]
 
-export function Libraries({ categories }: Props) {
+export function Libraries() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const categoryParam = searchParams.get('category') || 'All'
@@ -37,18 +36,18 @@ export function Libraries({ categories }: Props) {
       <div className="flex flex-col gap-3 md:items-end mb-3">
         {/* Category badges */}
         <div className="flex flex-wrap gap-2">
-          {categories.map(cat => (
+          {category.map(cat => (
             <Button
-              key={cat}
-              onClick={() => handleCategoryClick(cat)}
+              key={cat.name}
+              onClick={() => handleCategoryClick(cat.value)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition 
                 ${
-                  categoryParam === cat
+                  categoryParam === cat.value
                     ? 'bg-gradient-color text-white shadow-md'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}
             >
-              {cat}
+              {cat.name}
             </Button>
           ))}
         </div>

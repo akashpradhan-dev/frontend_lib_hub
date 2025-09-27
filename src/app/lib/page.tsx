@@ -1,8 +1,6 @@
 import { Libraries } from '@/components/Libraries'
 import React, { Suspense } from 'react'
 
-const categories = ['All', 'Backend', 'Frontend', 'Mobile', 'DevOps']
-
 export default function LibrariesPage() {
   return (
     <div className="min-h-screen transition-colors duration-300">
@@ -23,7 +21,7 @@ export default function LibrariesPage() {
       <Suspense
         fallback={<div className="px-4 py-20 text-center">loading...</div>}
       >
-        <Libraries categories={categories} />
+        <Libraries />
       </Suspense>
     </div>
   )
