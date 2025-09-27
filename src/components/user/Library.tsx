@@ -1,5 +1,5 @@
 'use client'
-import { ChevronLeft } from 'lucide-react'
+import { ChevronLeft, EditIcon } from 'lucide-react'
 import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { Badge } from '../ui/badge'
@@ -10,6 +10,7 @@ import toast from 'react-hot-toast'
 import { usePublishMutation } from '@/services/mutation/user/publish'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 export const Library = ({ id }: { id: string }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -48,8 +49,11 @@ export const Library = ({ id }: { id: string }) => {
         {/* Card Section */}
         <Card className="group w-full rounded-2xl border gap-2 bg-card/80 px-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
           <CardHeader className="flex flex-row items-center justify-between p-0">
-            <CardTitle className="text-2xl font-bold tracking-tight">
+            <CardTitle className="w-full text-2xl font-bold tracking-tight flex justify-between items-center">
               {library.name}
+              <Link href={`/user/libraries/my-libraries/${library._id}/edit`}>
+                <EditIcon className="size-5" />
+              </Link>
             </CardTitle>
           </CardHeader>
 
@@ -60,19 +64,34 @@ export const Library = ({ id }: { id: string }) => {
             </p>
 
             {/* Tags */}
-            {library?.tags?.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {library.tags.map((tag, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="rounded-full px-3 py-1 text-xs font-medium"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
+            <div className="flex flex-wrap gap-2">
+              {library?.category && (
+                <Badge
+                  variant="secondary"
+                  className="rounded-full px-3 py-0.5 text-xs font-medium"
+                >
+                  {library?.category}
+                </Badge>
+              )}
+
+              {library?.framework && (
+                <Badge
+                  variant="secondary"
+                  className="rounded-full px-3 py-0.5 text-xs font-medium"
+                >
+                  {library?.framework}
+                </Badge>
+              )}
+
+              {library?.language && (
+                <Badge
+                  variant="secondary"
+                  className="rounded-full px-3 py-0.5 text-xs font-medium"
+                >
+                  {library?.language}
+                </Badge>
+              )}
+            </div>
           </CardContent>
         </Card>
 

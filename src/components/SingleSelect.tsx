@@ -12,7 +12,7 @@ import {
 import { SelectProps } from '@radix-ui/react-select'
 
 interface Item<T extends string> {
-  key: T
+  value: T
   name: string
 }
 
@@ -37,7 +37,7 @@ export function SingleSelect<T extends string>({
         <SelectGroup>
           {selectLabel && <SelectLabel>{selectLabel}</SelectLabel>}
           {items.map(item => (
-            <SelectItem key={item.key} value={item.key}>
+            <SelectItem key={item.value} value={item.value}>
               {item.name}
             </SelectItem>
           ))}

@@ -20,6 +20,7 @@ export interface Library {
   category?: string
   language?: string
   framework?: string
+  libraryType?: string
 }
 
 export interface LibrariesResponse extends BaseResponse {

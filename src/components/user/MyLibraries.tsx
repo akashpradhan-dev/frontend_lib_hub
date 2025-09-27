@@ -54,12 +54,7 @@ export default function MyLibraries() {
             >
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span className="text-lg font-semibold">
-                    {lib.name}{' '}
-                    <span className="text-slate-500 dark:text-slate-400 text-sm">
-                      v{lib.version}
-                    </span>
-                  </span>
+                  <span className="text-lg font-semibold">{lib.name} </span>
                 </CardTitle>
               </CardHeader>
 
