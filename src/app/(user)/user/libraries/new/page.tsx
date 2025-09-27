@@ -16,7 +16,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { useSaveLibraryMutation } from '@/services/mutation/user/addNewLibrary'
 import { useAuth } from '@/contexts/AuthContext'
 import toast from 'react-hot-toast'
@@ -39,7 +38,6 @@ const librarySchema = z.object({
     .string('Enter a valid URL')
     .min(1, 'Repository URL is required'),
   homepageUrl: z.string('Enter a valid URL').optional().or(z.literal('')),
-  tags: z.string().optional(),
   exampleUsage: z.string().optional(),
   category: z.string({
     message: 'Please select an email to display.',
@@ -64,7 +62,6 @@ export default function AddNew() {
       description: '',
       repositoryUrl: '',
       homepageUrl: '',
-      tags: '',
       exampleUsage: '',
       category: '',
       language: '',
@@ -73,14 +70,8 @@ export default function AddNew() {
     },
   })
 
-  const tags = form
-    .watch('tags')
-    ?.split(',')
-    .map(tag => tag.trim())
-    .filter(Boolean)
-
   const onSubmit = (data: LibraryFormData) => {
-    const payload = { ...data, tags, createdBy: user?._id }
+    const payload = { ...data, createdBy: user?._id }
     mutate(payload, {
       onSuccess: () => {
         form.reset()
@@ -207,24 +198,6 @@ export default function AddNew() {
                   <FormControl>
                     <Input placeholder="https://example.com" {...field} />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* Tags */}
-            <FormField
-              control={form.control}
-              name="tags"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tags (comma separated)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="react, state-management" {...field} />
-                  </FormControl>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {tags?.map((tag, idx) => <Badge key={idx}>{tag}</Badge>)}
-                  </div>
                   <FormMessage />
                 </FormItem>
               )}

@@ -26,19 +26,34 @@ export const LibraryCard = ({ library }: LibraryCardProps) => {
               {library.description}
             </p>
 
-            {library?.tags?.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {library.tags.map((tag, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="rounded-full px-3 py-0.5 text-xs font-medium"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
+            <div className="flex flex-wrap gap-2">
+              {library?.category && (
+                <Badge
+                  variant="secondary"
+                  className="rounded-full px-3 py-0.5 text-xs font-medium"
+                >
+                  {library?.category}
+                </Badge>
+              )}
+
+              {library?.framework && (
+                <Badge
+                  variant="secondary"
+                  className="rounded-full px-3 py-0.5 text-xs font-medium"
+                >
+                  {library?.framework}
+                </Badge>
+              )}
+
+              {library?.language && (
+                <Badge
+                  variant="secondary"
+                  className="rounded-full px-3 py-0.5 text-xs font-medium"
+                >
+                  {library?.language}
+                </Badge>
+              )}
+            </div>
           </CardContent>
 
           {/* Footer */}

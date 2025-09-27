@@ -8,34 +8,22 @@ interface CreateLibRequest {
   description: string
   repositoryUrl: string
   homepageUrl?: string
-  tags?: string[]
   exampleUsage?: string
-  createdBy: string | undefined
+  createdBy?: string
   category: string
+  language?: string
+  framework?: string
+  libraryType?: string
 }
 
 interface SaveLibraryResponse extends BaseResponse {
   data: Library
 }
 
-const createLibrary = async ({
-  name,
-  description,
-  repositoryUrl,
-  homepageUrl,
-  tags,
-  exampleUsage,
-}: CreateLibRequest) => {
+const createLibrary = async (payload: CreateLibRequest) => {
   const response = await api.post<SaveLibraryResponse>(
     '/v1/user/library/save',
-    {
-      name,
-      description,
-      repositoryUrl,
-      homepageUrl,
-      tags,
-      exampleUsage,
-    },
+    payload,
   )
   return response.data
 }

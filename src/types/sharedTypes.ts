@@ -17,6 +17,9 @@ export interface Library {
   createdAt: string
   updatedAt: string
   liked?: boolean
+  category?: string
+  language?: string
+  framework?: string
 }
 
 export interface LibrariesResponse extends BaseResponse {

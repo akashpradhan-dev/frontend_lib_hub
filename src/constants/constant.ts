@@ -16,7 +16,6 @@ export const categoryOptions = [
 
 export const languageOptions = [
   { key: 'JavaScript', name: 'JavaScript' },
-  { key: 'TypeScript', name: 'TypeScript' },
   { key: 'Python', name: 'Python' },
   { key: 'Java', name: 'Java' },
   { key: 'C#', name: 'C#' },
