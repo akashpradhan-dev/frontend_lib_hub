@@ -7,12 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Github } from 'lucide-react'
 import { useMyLibrariesQuery } from '@/services/query/myLibraries'
 import Link from 'next/link'
 import { DeleteLibrary } from './DeleteLibrary'
+import { Badge } from '../ui/badge'
 
 export default function MyLibraries() {
   const { data, status, error } = useMyLibrariesQuery()
@@ -54,12 +54,7 @@ export default function MyLibraries() {
             >
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span className="text-lg font-semibold">
-                    {lib.name}{' '}
-                    <span className="text-slate-500 dark:text-slate-400 text-sm">
-                      v{lib.version}
-                    </span>
-                  </span>
+                  <span className="text-lg font-semibold">{lib.name} </span>
                 </CardTitle>
               </CardHeader>
 
@@ -69,11 +64,32 @@ export default function MyLibraries() {
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  {lib.tags.map(tag => (
-                    <Badge key={tag} variant="secondary">
-                      {tag}
+                  {lib?.category && (
+                    <Badge
+                      variant="secondary"
+                      className="rounded-full px-3 py-0.5 text-xs font-medium"
+                    >
+                      {lib?.category}
                     </Badge>
-                  ))}
+                  )}
+
+                  {lib?.framework && (
+                    <Badge
+                      variant="secondary"
+                      className="rounded-full px-3 py-0.5 text-xs font-medium"
+                    >
+                      {lib?.framework}
+                    </Badge>
+                  )}
+
+                  {lib?.language && (
+                    <Badge
+                      variant="secondary"
+                      className="rounded-full px-3 py-0.5 text-xs font-medium"
+                    >
+                      {lib?.language}
+                    </Badge>
+                  )}
                 </div>
               </CardContent>
             </Link>

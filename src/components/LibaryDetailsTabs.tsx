@@ -42,6 +42,21 @@ export const LibaryDetailsTabs = ({ library }: LibaryDetailsTabsProps) => {
           {library?.description}
         </p>
 
+        {library?.homepageUrl && (
+          <div>
+            <span className="block text-sm font-semibold text-foreground">
+              Homepage
+            </span>
+            <a
+              href={library.homepageUrl}
+              target="_blank"
+              className="mt-1 inline-block truncate rounded-md bg-muted px-3 py-1 text-sm text-blue-500 hover:underline"
+            >
+              {library.homepageUrl}
+            </a>
+          </div>
+        )}
+
         {library?.exampleUsage ? (
           <SyntaxHighlight codeBlock={library.exampleUsage} />
         ) : (

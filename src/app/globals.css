@@ -222,6 +222,8 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+
+  --color-gradient-color: linear-gradient(to right, #9333ea, #ec4899);
 }
 
 @layer base {
@@ -230,6 +232,12 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-gradient-color {
+    background-image: linear-gradient(to right, #9333ea, #ec4899);
   }
 }
 

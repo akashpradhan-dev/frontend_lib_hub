@@ -1,17 +1,9 @@
-'use client'
+import { Libraries } from '@/components/Libraries'
+import React, { Suspense } from 'react'
 
-import { LibraryCard } from '@/components/LibraryCard'
-import React from 'react'
-import { useLibrariesQuery } from '@/services/query/libraries'
+const categories = ['All', 'Backend', 'Frontend', 'Mobile', 'DevOps']
 
-const Libraries = () => {
-  const { data, status } = useLibrariesQuery()
-
-  if (status === 'pending') {
-    return <div>loading...</div>
-  }
-  const list = data?.data
-
+export default function LibrariesPage() {
   return (
     <div className="min-h-screen transition-colors duration-300">
       {/* Hero Section */}
@@ -28,24 +20,11 @@ const Libraries = () => {
         </div>
       </section>
 
-      {/* Libraries Grid */}
-      <section className="px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {list?.map(library => (
-            <LibraryCard key={library._id} library={library} />
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {list?.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20 text-center text-muted-foreground">
-            <p className="text-lg">No libraries found.</p>
-            <p className="mt-2 text-sm">Please check back later.</p>
-          </div>
-        )}
-      </section>
+      <Suspense
+        fallback={<div className="px-4 py-20 text-center">loading...</div>}
+      >
+        <Libraries categories={categories} />
+      </Suspense>
     </div>
   )
 }
-
-export default Libraries
