@@ -393,7 +393,7 @@ export default function EditLibrary() {
 
                 <Button
                   type="submit"
-                  disabled={status === 'pending' || libraryStatus === 'pending'}
+                  disabled={status === 'pending'}
                   className="w-full py-3 rounded-lg font-semibold text-white bg-gradient-color shadow-lg hover:shadow-xl transition-transform hover:scale-[1.02]"
                 >
                   {status === 'pending' ? 'Saving...' : 'Save'}
