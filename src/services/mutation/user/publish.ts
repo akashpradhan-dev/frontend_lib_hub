@@ -23,7 +23,7 @@ export const usePublishMutation = () => {
     mutationFn: PublishAction,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ['my-librrary-id', variables.libraryId],
+        queryKey: ['my-library-id', variables.libraryId],
       })
     },
   })

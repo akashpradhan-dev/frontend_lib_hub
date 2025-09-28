@@ -132,8 +132,8 @@ export default function AddNew() {
   }
 
   return (
-    <section className="flex min-h-[90vh] items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-2xl rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-8 shadow-xl border border-slate-200 dark:border-slate-800">
+    <section className="flex min-h-[90vh] items-center justify-center md:px-4 px-2 lg:px-8">
+      <div className="w-full max-w-2xl rounded-2xl bg-white/70 dark:bg-black/50 backdrop-blur-xl p-8 shadow-xl border border-slate-200 dark:border-slate-800">
         <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
           Submit a New Library
         </h2>
