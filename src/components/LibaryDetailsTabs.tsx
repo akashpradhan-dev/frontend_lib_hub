@@ -47,13 +47,15 @@ export const LibaryDetailsTabs = ({ library }: LibaryDetailsTabsProps) => {
             <span className="block text-sm font-semibold text-foreground">
               Homepage
             </span>
-            <a
-              href={library.homepageUrl}
-              target="_blank"
-              className="mt-1 inline-block truncate rounded-md bg-muted px-3 py-1 text-sm text-blue-500 hover:underline"
-            >
-              {library.homepageUrl}
-            </a>
+            <div className="overflow-scroll">
+              <a
+                href={library.homepageUrl}
+                target="_blank"
+                className="mt-1 inline-block rounded-md bg-muted px-3 py-1 text-sm text-blue-500 hover:underline"
+              >
+                {library.homepageUrl}
+              </a>
+            </div>
           </div>
         )}
 
@@ -89,13 +91,15 @@ export const LibaryDetailsTabs = ({ library }: LibaryDetailsTabsProps) => {
               <span className="block text-sm font-semibold text-foreground">
                 Homepage
               </span>
-              <a
-                href={library.homepageUrl}
-                target="_blank"
-                className="mt-1 inline-block truncate rounded-md bg-muted px-3 py-1 text-sm text-blue-500 hover:underline"
-              >
-                {library.homepageUrl}
-              </a>
+              <div className="overflow-scroll">
+                <a
+                  href={library.homepageUrl}
+                  target="_blank"
+                  className="mt-1 inline-block truncate rounded-md bg-muted px-3 py-1 text-sm text-blue-500 hover:underline"
+                >
+                  {library.homepageUrl}
+                </a>
+              </div>
             </div>
           )}
 
@@ -105,13 +109,15 @@ export const LibaryDetailsTabs = ({ library }: LibaryDetailsTabsProps) => {
               <span className="block text-sm font-semibold text-foreground">
                 Repository
               </span>
-              <a
-                href={library.repositoryUrl}
-                target="_blank"
-                className="mt-1 inline-block truncate rounded-md bg-muted px-3 py-1 text-sm text-blue-500 hover:underline"
-              >
-                {library.repositoryUrl}
-              </a>
+              <div className="overflow-scroll">
+                <a
+                  href={library.repositoryUrl}
+                  target="_blank"
+                  className="mt-1 inline-block truncate rounded-md bg-muted px-3 py-1 text-sm text-blue-500 hover:underline"
+                >
+                  {library.repositoryUrl}
+                </a>
+              </div>
             </div>
           )}
         </div>

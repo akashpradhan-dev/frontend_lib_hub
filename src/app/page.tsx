@@ -44,7 +44,7 @@ export default function Home() {
               href="/user/libraries/new"
               className="px-8 py-4 rounded-full border border-slate-300 dark:border-slate-700 text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-white hover:border-purple-500 hover:bg-purple-500/10 transition-all duration-300"
             >
-              Submit a Package
+              Create Your Own
             </Link>
           </div>
 

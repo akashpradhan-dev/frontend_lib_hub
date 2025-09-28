@@ -40,7 +40,7 @@ export const Library = ({ id }: { id: string }) => {
       <Button
         variant="link"
         onClick={() => router.back()}
-        className="mb-6 cursor-pointer flex max-w-7xl justify-start items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors md:w-2/3 mx-auto"
+        className="mb-6 cursor-pointer flex max-w-7xl justify-start items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors md:w-2/3 md:mx-auto"
       >
         <ChevronLeft className="h-4 w-4" />
         Back to Libraries

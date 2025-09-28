@@ -5,6 +5,7 @@ import { LibaryDetailsTabs } from '@/components/LibaryDetailsTabs'
 import Link from 'next/link'
 import { BaseResponse, Library } from '@/types/sharedTypes'
 import LikeLibrary from '@/components/LikeLibrary'
+import { ShareLibrary } from '@/components/ShareLibrary'
 
 interface ResponseType extends BaseResponse {
   data: Library
@@ -55,8 +56,10 @@ const libraryDetails = async ({
           {/* Card Section */}
           <Card className="group w-full rounded-2xl border gap-2 bg-card/80 px-8 shadow-sm backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
             <CardHeader className="flex flex-row items-center justify-between p-0">
-              <CardTitle className="text-2xl font-bold tracking-tight">
-                {library.name}
+              <CardTitle className="w-full text-2xl font-bold tracking-tight flex justify-between">
+                <span>{library.name}</span>
+
+                <ShareLibrary />
               </CardTitle>
               {/* <CardAction>
                 <Link
