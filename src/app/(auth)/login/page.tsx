@@ -83,7 +83,7 @@ export default function LoginPage() {
 
   return (
     <section className="flex min-h-[90vh] items-center justify-center">
-      <div className="w-full max-w-md rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-8 shadow-xl border border-slate-200 dark:border-slate-800">
+      <div className="w-full max-w-md rounded-2xl bg-white/70 dark:bg-black/70 backdrop-blur-xl p-8 shadow-xl border border-slate-200 dark:border-slate-800">
         {/* Title */}
         <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
           Login to DevVolt
